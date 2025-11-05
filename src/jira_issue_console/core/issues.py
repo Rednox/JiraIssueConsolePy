@@ -56,35 +56,33 @@ def group_transitions_by_day(transitions: List[Dict[str, Any]]) -> Dict[date, Li
     return dict(daily)
 
 
-async def list_issue_transitions(
-    issue_key: str,
+def extract_transitions_from_issue(
+    issue: Dict[str, Any],
     workflow: Optional[WorkflowConfig] = None,
 ) -> List[Dict[str, Any]]:
-    """Return a list of status transitions for an issue, ordered by date.
+    """Extract status transitions from a raw Jira issue.
     
     Args:
-        issue_key: The Jira issue key (e.g. 'PROJ-1')
+        issue: Raw Jira issue dict with fields and changelog
         workflow: Optional workflow config for status normalization
     
     Returns:
         List of dicts with 'status' and 'date' (datetime) showing when the issue
         entered each status. The first entry is always the creation status.
     """
-    # Fetch issue with changelog
-    raw = await jira_client.fetch_issues(issue_key.split("-")[0], 
-                                       jql=f"key = {issue_key}")
-    if not raw:
-        return []
-    
-    issue = raw[0]
     transitions = []
     
     # Add initial status from creation
     # The initial status is the 'fromString' of the first history item, or a default
-    created_date = _parse_jira_datetime(issue["fields"]["created"])
+    fields = issue.get("fields", {})
+    created_str = fields.get("created")
+    if not created_str:
+        return []
     
-    # Try to get initial status from first changelog entry
-    changelog = issue.get("changelog", {}).get("histories", [])
+    created_date = _parse_jira_datetime(created_str)
+    
+    # Try to get initial status from first changelog entry or current status
+    changelog = fields.get("changelog", {}).get("histories", [])
     initial_status = "Open"  # default
     if changelog:
         first_history = min(changelog, key=lambda h: h["created"])
@@ -92,6 +90,11 @@ async def list_issue_transitions(
             if item.get("field") == "status" and item.get("fromString"):
                 initial_status = item["fromString"]
                 break
+    else:
+        # If no changelog, use current status
+        status_dict = fields.get("status", {})
+        if isinstance(status_dict, dict):
+            initial_status = status_dict.get("name", "Open")
     
     # Map through workflow if provided
     if workflow:
@@ -115,3 +118,51 @@ async def list_issue_transitions(
                 })
     
     return transitions
+
+
+def prepare_issues_with_transitions(
+    raw_issues: List[Dict[str, Any]],
+    workflow: Optional[WorkflowConfig] = None,
+) -> List[Dict[str, Any]]:
+    """Transform raw Jira issues into format expected by export functions.
+    
+    Args:
+        raw_issues: List of raw Jira issue dicts
+        workflow: Optional workflow config for status normalization
+    
+    Returns:
+        List of issues with added 'transitions' field
+    """
+    result = []
+    for issue in raw_issues:
+        prepared = {
+            "key": issue.get("key"),
+            "fields": issue.get("fields", {}),
+            "transitions": extract_transitions_from_issue(issue, workflow=workflow)
+        }
+        result.append(prepared)
+    return result
+
+
+async def list_issue_transitions(
+    issue_key: str,
+    workflow: Optional[WorkflowConfig] = None,
+) -> List[Dict[str, Any]]:
+    """Return a list of status transitions for an issue, ordered by date.
+    
+    Args:
+        issue_key: The Jira issue key (e.g. 'PROJ-1')
+        workflow: Optional workflow config for status normalization
+    
+    Returns:
+        List of dicts with 'status' and 'date' (datetime) showing when the issue
+        entered each status. The first entry is always the creation status.
+    """
+    # Fetch issue with changelog
+    raw = await jira_client.fetch_issues(issue_key.split("-")[0], 
+                                       jql=f"key = {issue_key}")
+    if not raw:
+        return []
+    
+    issue = raw[0]
+    return extract_transitions_from_issue(issue, workflow=workflow)
