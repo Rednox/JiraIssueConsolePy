@@ -1,8 +1,10 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date, datetime
 import os
 from typing import Optional, List, Set
 import json
+
+from jira_issue_console.core.workflow_config import WorkflowConfig, load_workflow_config
 
 
 @dataclass
@@ -14,7 +16,8 @@ class Config:
     max_retries: int = 3
     backoff_factor: float = 0.5
     use_business_days: bool = False
-    holidays: Set[date] = None  # Set of dates to exclude from business day calculations
+    holidays: Set[date] = field(default_factory=set)  # Set of dates to exclude from business day calculations
+    workflow_file: Optional[str] = None  # Path to workflow configuration file
 
 
 def _parse_holidays(holidays_str: Optional[str]) -> Set[date]:
@@ -39,4 +42,5 @@ def from_env() -> Config:
         backoff_factor=float(os.environ.get("JIRA_BACKOFF_FACTOR", "0.5")),
         use_business_days=bool(os.environ.get("JIRA_USE_BUSINESS_DAYS", "").lower() in ("1", "true", "yes")),
         holidays=_parse_holidays(holidays_json),
+        workflow_file=os.environ.get("JIRA_WORKFLOW_FILE"),
     )

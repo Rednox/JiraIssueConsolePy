@@ -1,0 +1,9 @@
+Funnel:Inbound Channel:Open:Reopened 
+Analysis
+Backlog
+In Progress:In Implementation:In Development:In Dev:   
+Released:E2E Test:In Review:Releasing
+Done:Closed:Resolved
+<First>Analysis
+<Last>Done
+<Implementation>In Progress

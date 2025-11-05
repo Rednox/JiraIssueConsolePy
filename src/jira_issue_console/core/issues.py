@@ -3,9 +3,11 @@
 Keep this module pure (no network I/O); use `jira_client` only in higher-level modules or
 inject it for tests.
 """
-from typing import List, Dict, Any
-from datetime import datetime
+from typing import List, Dict, Any, Optional
+from datetime import datetime, date
+from collections import defaultdict
 from .. import jira_client
+from .workflow_config import WorkflowConfig
 
 
 def _parse_jira_datetime(s: str) -> datetime:
@@ -13,7 +15,7 @@ def _parse_jira_datetime(s: str) -> datetime:
     return datetime.strptime(s, "%Y-%m-%dT%H:%M:%S.%f%z")
 
 
-async def list_issues(project_key: str, jql: str = None) -> List[Dict[str, Any]]:
+async def list_issues(project_key: str, jql: Optional[str] = None) -> List[Dict[str, Any]]:
     """Return a list of simplified issue dicts for the given project.
 
     Args:
@@ -37,11 +39,32 @@ async def list_issues(project_key: str, jql: str = None) -> List[Dict[str, Any]]
     return result
 
 
-async def list_issue_transitions(issue_key: str) -> List[Dict[str, Any]]:
+def normalize_status(status: str, workflow: WorkflowConfig) -> str:
+    """Map a Jira status to its workflow group name."""
+    return workflow.get_group_for_status(status)
+
+
+def group_transitions_by_day(transitions: List[Dict[str, Any]]) -> Dict[date, List[Dict[str, Any]]]:
+    """Group transitions by day for CFD calculations."""
+    daily = defaultdict(list)
+    if not transitions:
+        return {}
+    for t in transitions:
+        daily[t["date"].date()].append(t)
+    
+    # Return only days that had actual transitions
+    return dict(daily)
+
+
+async def list_issue_transitions(
+    issue_key: str,
+    workflow: Optional[WorkflowConfig] = None,
+) -> List[Dict[str, Any]]:
     """Return a list of status transitions for an issue, ordered by date.
     
     Args:
         issue_key: The Jira issue key (e.g. 'PROJ-1')
+        workflow: Optional workflow config for status normalization
     
     Returns:
         List of dicts with 'status' and 'date' (datetime) showing when the issue
@@ -57,20 +80,37 @@ async def list_issue_transitions(issue_key: str) -> List[Dict[str, Any]]:
     transitions = []
     
     # Add initial status from creation
+    # The initial status is the 'fromString' of the first history item, or a default
     created_date = _parse_jira_datetime(issue["fields"]["created"])
-    initial_status = "To Do"  # assuming default initial status
+    
+    # Try to get initial status from first changelog entry
+    changelog = issue.get("changelog", {}).get("histories", [])
+    initial_status = "Open"  # default
+    if changelog:
+        first_history = min(changelog, key=lambda h: h["created"])
+        for item in first_history.get("items", []):
+            if item.get("field") == "status" and item.get("fromString"):
+                initial_status = item["fromString"]
+                break
+    
+    # Map through workflow if provided
+    if workflow:
+        initial_status = normalize_status(initial_status, workflow)
+    
     transitions.append({
         "status": initial_status,
         "date": created_date
     })
     
     # Add status changes from changelog
-    changelog = issue.get("changelog", {}).get("histories", [])
-    for history in changelog:
+    for history in sorted(changelog, key=lambda h: h["created"]):
         for item in history.get("items", []):
             if item.get("field") == "status":
+                status = item["toString"]
+                if workflow:
+                    status = normalize_status(status, workflow)
                 transitions.append({
-                    "status": item["toString"],
+                    "status": status,
                     "date": _parse_jira_datetime(history["created"])
                 })
     

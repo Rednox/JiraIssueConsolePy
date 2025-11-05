@@ -10,7 +10,7 @@ from jira_issue_console.core import issues
 
 
 @pytest.mark.asyncio
-async def test_list_issue_transitions():
+async def test_list_issue_transitions(respx_mock):
     # Arrange: mock issue with status changes in history
     raw_issue = {
         "id": "1",
@@ -46,8 +46,10 @@ async def test_list_issue_transitions():
         }
     }
 
-    async def fake_fetch(project_key, jql=None):
-        return [raw_issue]
+    # Mock the Jira API response
+    respx_mock.get("/rest/api/2/search").mock(
+        return_value=respx_mock.Response(200, json={"issues": [raw_issue]})
+    )
 
     # Act: get transitions for the issue
     result = await issues.list_issue_transitions("PROJ-1")

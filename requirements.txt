@@ -6,3 +6,4 @@ black
 ruff
 mypy
 requests
+click

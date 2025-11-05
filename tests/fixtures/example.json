@@ -1,0 +1,69 @@
+{
+    "// WARNING: This is example data for testing only. When exporting real Jira data,": "",
+    "// ensure to remove or sanitize any sensitive information before committing.": "",
+    "issues": [
+        {
+            "id": "10001",
+            "key": "TEST-1",
+            "fields": {
+                "summary": "Test issue 1",
+                "created": "2023-01-01T10:00:00.000+0000",
+                "priority": {
+                    "name": "High"
+                },
+                "status": {
+                    "name": "Open"
+                },
+                "changelog": {
+                    "histories": [
+                        {
+                            "created": "2023-01-02T14:00:00.000+0000",
+                            "items": [
+                                {
+                                    "field": "status",
+                                    "toString": "In Progress"
+                                }
+                            ]
+                        },
+                        {
+                            "created": "2023-01-03T16:00:00.000+0000",
+                            "items": [
+                                {
+                                    "field": "status",
+                                    "toString": "Done"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": "10002",
+            "key": "TEST-2",
+            "fields": {
+                "summary": "Test issue 2",
+                "created": "2023-01-02T09:00:00.000+0000",
+                "priority": {
+                    "name": "Medium"
+                },
+                "status": {
+                    "name": "Open"
+                },
+                "changelog": {
+                    "histories": [
+                        {
+                            "created": "2023-01-03T11:00:00.000+0000",
+                            "items": [
+                                {
+                                    "field": "status",
+                                    "toString": "In Progress"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

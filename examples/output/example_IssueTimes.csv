@@ -1,0 +1,248 @@
+Project,Group,Key,Issuetype,Status,Created Date,Component,Category,First Date,Implementation Date,Closed Date,Funnel,Analysis,Backlog,In Progress,Released,Done,Resolution 
+,,LIC-247,Improvement,Done,30.03.2020 16:30:13,Timesheets|,Fixed,16.04.2020 09:00:00,16.04.2020 09:00:00,08.05.2020 13:10:06,32669,0,0,23290,0,2889811,Fixed 
+,,LIC-246,New Feature,Done,28.01.2020 11:15:40,Controller Unit|Invoice Management|Math Expressions|,Fixed,28.01.2020 08:00:00,28.01.2020 08:00:00,24.02.2020 12:53:23,24772,0,0,14204,0,2996388,Fixed 
+,,LIC-245,Improvement,Released,31.01.2020 09:08:30,Logging|Math Expressions|,Cannot Reproduce,04.02.2020 12:18:46,04.02.2020 12:18:46,,15602,0,0,441,2883907,131222,Cannot Reproduce 
+,,LIC-244,Bug,Funnel,06.05.2020 16:58:40,Infrastucture|Printing|Windows Client|,,,,,0,0,0,0,0, 
+,,LIC-243,New Feature,Released,20.02.2020 10:43:57,Windows Client|,Resolved,26.02.2020 12:12:24,26.02.2020 12:12:24,,17641,0,0,4273,2883907,96454,Resolved 
+,,LIC-242,Internal Task,Funnel,14.04.2020 14:40:04,Messenger Server|Timesheets|,,,,,0,0,0,0,0, 
+,,LIC-241,Improvement,Funnel,20.03.2020 09:22:32,Printing|,,08.04.2020 09:00:00,08.04.2020 09:00:00,,2959159,0,0,1440,0,0, 
+,,LIC-240,New Feature,In Progress,26.03.2020 13:00:54,,,08.05.2020 09:00:00,08.05.2020 09:00:00,,61679,0,0,2890062,0,0, 
+,,LIC-239,Internal Task,Funnel,06.05.2020 13:40:15,Controller Unit|,,,,,0,0,0,0,0, 
+,,LIC-238,Improvement,Released,10.03.2020 08:23:57,Infrastucture|Linux Client|Timesheets|,Cannot Reproduce,31.03.2020 09:00:00,31.03.2020 09:00:00,,60222,0,0,10634,2883907,20293,Cannot Reproduce 
+,,LIC-237,Internal Task,Released,17.02.2020 10:51:32,Infrastucture|Schema Builder|Timesheets|,Incomplete,06.03.2020 10:49:43,06.03.2020 10:49:43,,47634,0,0,14425,2883907,60621,Incomplete 
+,,LIC-236,Bug,Funnel,02.04.2020 09:41:38,Messenger Server|Windows Client|,,,,,0,0,0,0,0, 
+,,LIC-235,Internal Task,Done,18.02.2020 09:13:27,Controller Unit|Schema Builder|,Fixed,13.03.2020 08:00:00,13.03.2020 08:00:00,30.03.2020 17:00:00,53061,0,0,6444,0,2945741,Fixed 
+,,LIC-234,Bug,Released,20.02.2020 12:19:54,DevExpress|Logging|Timesheets|,Duplicate,02.03.2020 12:38:01,02.03.2020 12:38:01,,23273,0,0,47383,2883907,47617,Duplicate 
+,,LIC-233,Internal Task,Released,29.01.2020 12:46:17,Linux Client|Math Expressions|,Incomplete,31.01.2020 08:00:00,31.01.2020 08:00:00,,41488,0,0,37654,2883907,70781,Incomplete 
+,,LIC-232,Internal Task,Done,05.03.2020 12:25:14,Controller Unit|,Fixed,30.03.2020 09:00:00,30.03.2020 09:00:00,29.04.2020 17:00:00,61125,0,0,18347,0,2902541,Fixed 
+,,LIC-231,Bug,Done,07.02.2020 08:12:39,,Fixed,14.02.2020 12:41:39,14.02.2020 12:41:39,20.03.2020 12:37:45,31015,0,0,29728,0,2960404,Fixed 
+,,LIC-230,Improvement,Funnel,09.04.2020 12:50:54,Infrastucture|,,,,,0,0,0,0,0, 
+,,LIC-229,New Feature,Released,21.01.2020 15:18:22,Linux Client|,Won't Fix,21.01.2020 12:29:12,21.01.2020 12:29:12,,30071,0,0,20340,2883907,110884,Won't Fix 
+,,LIC-228,Improvement,Funnel,09.04.2020 15:45:00,Messenger Server|,,,,,0,0,0,0,0, 
+,,LIC-227,New Feature,Funnel,07.05.2020 13:58:24,Invoice Management|,,,,,0,0,0,0,0, 
+,,LIC-226,Improvement,Released,28.01.2020 08:51:16,Math Expressions|Windows Client|,Won't Fix,28.01.2020 08:00:00,28.01.2020 08:00:00,,11223,0,0,32405,2883907,107974,Won't Fix 
+,,LIC-225,Bug,Funnel,25.03.2020 11:02:49,,,15.04.2020 12:41:29,15.04.2020 12:41:29,,2953160,0,0,138,0,0, 
+,,LIC-224,Improvement,Released,20.03.2020 11:29:02,,Cannot Reproduce,17.04.2020 13:43:05,17.04.2020 13:43:05,,40724,0,0,4036,2883907,31803,Cannot Reproduce 
+,,LIC-223,New Feature,Done,17.01.2020 08:03:45,Math Expressions|Schema Builder|,Fixed,17.01.2020 08:00:00,17.01.2020 08:00:00,24.01.2020 12:08:41,977,0,0,9347,0,3041073,Fixed 
+,,LIC-222,New Feature,Released,26.02.2020 12:24:34,Schema Builder|,Duplicate,23.03.2020 08:00:00,23.03.2020 08:00:00,,46744,0,0,13816,2883907,49067,Duplicate 
+,,LIC-221,Improvement,Funnel,17.02.2020 12:21:05,Schema Builder|,,20.02.2020 11:43:53,20.02.2020 11:43:53,,2940176,0,0,10063,0,56259, 
+,,LIC-220,New Feature,Funnel,15.04.2020 13:29:10,,,,,,0,0,0,0,0, 
+,,LIC-219,New Feature,Released,27.01.2020 14:16:28,Math Expressions|,Cannot Reproduce,27.01.2020 12:12:11,27.01.2020 12:12:11,,25508,0,0,34837,2883907,92370,Cannot Reproduce 
+,,LIC-218,Bug,Released,21.02.2020 15:53:46,,Incomplete,06.03.2020 11:21:50,06.03.2020 11:21:50,,46891,0,0,6071,2883907,63656,Incomplete 
+,,LIC-217,Bug,Funnel,11.03.2020 14:23:07,Infrastucture|Windows Client|,,16.04.2020 13:26:18,16.04.2020 13:26:18,,2937856,0,0,35400,0,0, 
+,,LIC-216,Improvement,Funnel,02.03.2020 08:55:07,Invoice Management|Schema Builder|Windows Client|,,09.04.2020 13:57:41,09.04.2020 13:57:41,,2970223,0,0,16322,0,0, 
+,,LIC-215,Improvement,Funnel,01.05.2020 15:41:20,DevExpress|Linux Client|Timesheets|,,,,,0,0,0,0,0, 
+,,LIC-214,Bug,Funnel,17.04.2020 14:03:32,Linux Client|,,,,,0,0,0,0,0, 
+,,LIC-213,Improvement,Released,14.02.2020 12:44:18,Messenger Server|Windows Client|,Incomplete,04.03.2020 14:41:45,04.03.2020 14:41:45,,51720,0,0,4615,2883907,70553,Incomplete 
+,,LIC-212,New Feature,Funnel,10.03.2020 11:58:59,Timesheets|,,10.03.2020 12:19:41,10.03.2020 12:19:41,,2964785,0,0,10057,0,0, 
+,,LIC-211,Bug,Released,05.02.2020 11:13:08,,Won't Fix,13.02.2020 15:50:30,13.02.2020 15:50:30,,39069,0,0,9913,2883907,90957,Won't Fix 
+,,LIC-210,Bug,Released,28.01.2020 13:11:14,Linux Client|Messenger Server|,Resolved,29.01.2020 11:36:17,29.01.2020 11:36:17,,24050,0,0,9236,2883907,118054,Resolved 
+,,LIC-209,New Feature,Funnel,31.03.2020 14:31:57,,,,,,0,0,0,0,0, 
+,,LIC-208,Improvement,Released,19.02.2020 14:41:10,Linux Client|Math Expressions|,Incomplete,24.02.2020 08:00:00,24.02.2020 08:00:00,,6798,0,0,150,2883907,112624,Incomplete 
+,,LIC-207,Improvement,Funnel,10.04.2020 12:45:46,,,05.05.2020 09:00:00,05.05.2020 09:00:00,,2923909,0,0,6246,0,0, 
+,,LIC-206,Internal Task,In Progress,03.04.2020 12:56:29,,,27.04.2020 09:00:00,27.04.2020 09:00:00,,45843,0,0,2894382,0,0, 
+,,LIC-205,New Feature,Funnel,21.02.2020 13:24:49,Messenger Server|,,01.04.2020 16:51:04,01.04.2020 16:51:04,,2968887,0,0,16111,0,15677, 
+,,LIC-204,Improvement,Funnel,06.04.2020 16:48:27,,,,,,0,0,0,0,0, 
+,,LIC-203,New Feature,Done,07.02.2020 12:31:07,,Incomplete,10.02.2020 08:00:00,10.02.2020 08:00:00,19.03.2020 12:52:33,45648,0,0,13411,0,2961829,Incomplete 
+,,LIC-202,Internal Task,Released,27.02.2020 09:44:49,Linux Client|Logging|Math Expressions|,Duplicate,24.03.2020 08:00:00,24.03.2020 08:00:00,,40034,0,0,3627,2883907,64688,Duplicate 
+,,LIC-201,Internal Task,Funnel,21.04.2020 15:26:48,Linux Client|Messenger Server|Printing|,,,,,0,0,0,0,0, 
+,,LIC-200,Internal Task,Done,17.01.2020 14:18:59,,Duplicate,17.01.2020 12:18:01,17.01.2020 12:18:01,22.01.2020 12:25:32,320,0,0,4178,0,3046523,Duplicate 
+,,LIC-199,Bug,Done,22.01.2020 13:52:13,DevExpress|Printing|Windows Client|,Fixed,22.01.2020 12:58:11,22.01.2020 12:58:11,14.02.2020 15:00:00,19065,0,0,14119,0,3010661,Fixed 
+,,LIC-198,New Feature,Done,14.02.2020 10:55:25,Logging|,Fixed,24.02.2020 10:56:03,24.02.2020 10:56:03,26.03.2020 12:19:59,34974,0,0,24148,0,2951781,Fixed 
+,,LIC-197,Improvement,Funnel,08.05.2020 15:35:32,,,,,,0,0,0,0,0, 
+,,LIC-196,New Feature,In Progress,10.04.2020 10:26:35,Infrastucture|Math Expressions|Schema Builder|,,27.04.2020 16:23:40,27.04.2020 16:23:40,,37793,0,0,2892501,0,0, 
+,,LIC-195,Bug,In Progress,31.03.2020 11:25:22,,,31.03.2020 09:00:00,31.03.2020 09:00:00,,52925,0,0,2891711,0,0, 
+,,LIC-194,Bug,Funnel,06.04.2020 11:46:07,Printing|,,,,,0,0,0,0,0, 
+,,LIC-193,New Feature,Funnel,07.05.2020 16:10:26,,,,,,0,0,0,0,0, 
+,,LIC-192,Improvement,Funnel,29.04.2020 09:03:30,Linux Client|Schema Builder|Windows Client|,,,,,0,0,0,0,0, 
+,,LIC-191,Bug,Released,30.01.2020 11:58:17,Math Expressions|,Duplicate,31.01.2020 08:00:00,31.01.2020 08:00:00,,2891,0,0,24648,2883907,120994,Duplicate 
+,,LIC-190,New Feature,Funnel,10.04.2020 16:28:51,Messenger Server|Windows Client|,,,,,0,0,0,0,0, 
+,,LIC-189,Bug,Funnel,25.03.2020 13:30:20,DevExpress|Logging|Timesheets|,,,,,0,0,0,0,0, 
+,,LIC-188,Internal Task,Funnel,21.04.2020 12:20:59,Math Expressions|Printing|,,,,,0,0,0,0,0, 
+,,LIC-187,Internal Task,Released,31.01.2020 13:06:19,Printing|,Duplicate,07.02.2020 08:00:00,07.02.2020 08:00:00,,56866,0,0,15141,2883907,75018,Duplicate 
+,,LIC-186,Bug,Done,15.01.2020 11:06:21,Controller Unit|Logging|,Fixed,15.01.2020 08:00:00,15.01.2020 08:00:00,17.02.2020 16:00:00,41107,0,0,6703,0,3006281,Fixed 
+,,LIC-185,New Feature,Released,06.02.2020 08:22:51,,Cannot Reproduce,06.02.2020 12:03:42,06.02.2020 12:03:42,,25909,0,0,16028,2883907,96733,Cannot Reproduce 
+,,LIC-184,New Feature,Funnel,27.04.2020 10:31:11,Infrastucture|Schema Builder|Windows Client|,,,,,0,0,0,0,0, 
+,,LIC-183,New Feature,Funnel,20.03.2020 15:23:46,Invoice Management|Math Expressions|Timesheets|,,10.04.2020 15:14:00,10.04.2020 15:14:00,,2947452,0,0,12785,0,0, 
+,,LIC-182,Improvement,Done,18.02.2020 14:53:47,Infrastucture|Invoice Management|,Won't Fix,24.03.2020 12:57:27,24.03.2020 12:57:27,15.04.2020 17:00:00,78862,0,0,3340,0,2922701,Won't Fix 
+,,LIC-181,Internal Task,Funnel,10.03.2020 15:53:15,,,09.04.2020 09:00:00,09.04.2020 09:00:00,,2973453,0,0,1154,0,0, 
+,,LIC-180,Internal Task,Funnel,23.03.2020 12:19:04,Logging|Messenger Server|Schema Builder|,,20.04.2020 12:12:36,20.04.2020 12:12:36,,2951259,0,0,4842,0,0, 
+,,LIC-179,Improvement,Released,13.01.2020 15:57:23,,Won't Fix,13.01.2020 12:30:25,13.01.2020 12:30:25,,9874,0,0,209,2883907,162694,Won't Fix 
+,,LIC-178,New Feature,Released,06.03.2020 13:39:59,DevExpress|Infrastucture|,Cannot Reproduce,27.03.2020 08:00:00,27.03.2020 08:00:00,,34269,0,0,10349,2883907,51974,Cannot Reproduce 
+,,LIC-177,New Feature,Funnel,23.04.2020 13:07:55,,,,,,0,0,0,0,0, 
+,,LIC-176,New Feature,Funnel,02.04.2020 13:25:57,,,30.04.2020 09:00:00,30.04.2020 09:00:00,,2938526,0,0,3109,0,0, 
+,,LIC-175,Bug,Funnel,04.05.2020 12:40:25,Invoice Management|Logging|,,,,,0,0,0,0,0, 
+,,LIC-174,New Feature,In Progress,02.03.2020 11:33:35,DevExpress|Math Expressions|Messenger Server|,,24.04.2020 13:32:10,24.04.2020 13:32:10,,94768,0,0,2891619,0,0, 
+,,LIC-173,New Feature,Funnel,25.03.2020 14:52:24,Printing|,,,,,0,0,0,0,0, 
+,,LIC-172,New Feature,Funnel,21.04.2020 09:53:02,Timesheets|,,,,,0,0,0,0,0, 
+,,LIC-171,New Feature,Funnel,01.05.2020 09:14:16,Infrastucture|Math Expressions|Printing|,,,,,0,0,0,0,0, 
+,,LIC-170,New Feature,Released,21.01.2020 09:36:10,DevExpress|,Resolved,21.01.2020 08:00:00,21.01.2020 08:00:00,,18650,0,0,17720,2883907,125265,Resolved 
+,,LIC-169,Improvement,Funnel,13.03.2020 13:23:38,Infrastucture|Timesheets|,,,,,0,0,0,0,0, 
+,,LIC-168,New Feature,Funnel,08.05.2020 10:11:21,Printing|,,,,,0,0,0,0,0, 
+,,LIC-167,Internal Task,Done,07.02.2020 10:31:31,Logging|Windows Client|,Fixed,27.02.2020 12:04:24,27.02.2020 12:04:24,09.04.2020 13:04:15,40588,0,0,24681,0,2955737,Fixed 
+,,LIC-166,Internal Task,Released,28.01.2020 14:41:49,Infrastucture|Logging|Printing|,Resolved,28.01.2020 12:28:33,28.01.2020 12:28:33,,25129,0,0,16492,2883907,109629,Resolved 
+,,LIC-165,Improvement,Funnel,07.04.2020 11:29:03,Controller Unit|Math Expressions|Printing|,,,,,0,0,0,0,0, 
+,,LIC-164,Bug,Released,17.03.2020 12:04:46,Windows Client|,Duplicate,20.03.2020 08:00:00,20.03.2020 08:00:00,,21516,0,0,53625,2883907,5704,Duplicate 
+,,LIC-163,Improvement,Funnel,29.04.2020 16:50:07,Messenger Server|Windows Client|,,,,,0,0,0,0,0, 
+,,LIC-162,Improvement,Done,17.01.2020 15:35:48,Math Expressions|Printing|,Won't Fix,17.01.2020 12:06:54,17.01.2020 12:06:54,04.02.2020 11:56:17,25,0,0,25676,0,3025245,Won't Fix 
+,,LIC-161,New Feature,Funnel,08.05.2020 11:49:45,Invoice Management|,,,,,0,0,0,0,0, 
+,,LIC-160,Improvement,Funnel,30.03.2020 13:32:00,Controller Unit|Messenger Server|,,,,,0,0,0,0,0, 
+,,LIC-159,Bug,Released,24.01.2020 11:06:49,Linux Client|Schema Builder|,Resolved,24.01.2020 11:31:22,24.01.2020 11:31:22,,459,0,0,24268,2883907,132499,Resolved 
+,,LIC-158,Bug,Released,20.02.2020 13:55:32,DevExpress|Logging|,Cannot Reproduce,17.03.2020 08:00:00,17.03.2020 08:00:00,,49824,0,0,2139,2883907,66214,Cannot Reproduce 
+,,LIC-157,New Feature,Funnel,14.04.2020 10:43:52,Logging|,,,,,0,0,0,0,0, 
+,,LIC-156,Bug,Released,17.01.2020 11:10:54,DevExpress|Math Expressions|Schema Builder|,Won't Fix,17.01.2020 08:00:00,17.01.2020 08:00:00,,19029,0,0,40159,2883907,108108,Won't Fix 
+,,LIC-155,New Feature,Funnel,23.04.2020 15:50:56,DevExpress|Infrastucture|Logging|,,,,,0,0,0,0,0, 
+,,LIC-154,Internal Task,Funnel,09.03.2020 08:32:55,Linux Client|Logging|Messenger Server|,,23.04.2020 09:00:00,23.04.2020 09:00:00,,2968839,0,0,7650,0,0, 
+,,LIC-153,Improvement,Funnel,12.03.2020 12:53:30,Invoice Management|,,,,,0,0,0,0,0, 
+,,LIC-152,Bug,Funnel,31.01.2020 10:47:46,DevExpress|Printing|,,04.02.2020 08:00:00,04.02.2020 08:00:00,,2972587,0,0,58481,0,0, 
+,,LIC-151,Internal Task,Done,06.03.2020 10:00:27,,Fixed,01.04.2020 09:00:00,01.04.2020 09:00:00,09.04.2020 13:58:52,47206,0,0,1990,0,2931523,Fixed 
+,,LIC-150,Bug,In Progress,04.03.2020 08:08:15,,,06.04.2020 13:36:57,06.04.2020 13:36:57,,64881,0,0,2918830,0,0, 
+,,LIC-149,Improvement,Done,24.02.2020 10:24:59,Infrastucture|,Fixed,03.04.2020 12:14:16,03.04.2020 12:14:16,11.05.2020 14:00:00,86526,0,0,7511,0,2902493,Fixed 
+,,LIC-148,Bug,In Progress,06.03.2020 11:56:11,Invoice Management|Linux Client|Logging|,,11.05.2020 09:00:00,11.05.2020 09:00:00,,94863,0,0,2885742,0,0, 
+,,LIC-147,New Feature,Funnel,13.04.2020 10:36:08,,,,,,0,0,0,0,0, 
+,,LIC-146,Improvement,Released,13.01.2020 12:56:12,,Resolved,13.01.2020 08:00:00,13.01.2020 08:00:00,,3988,0,0,30755,2883907,138214,Resolved 
+,,LIC-145,Bug,Funnel,06.05.2020 09:09:44,,,,,,0,0,0,0,0, 
+,,LIC-144,Bug,Released,28.02.2020 09:13:53,Math Expressions|,Won't Fix,23.04.2020 13:37:43,23.04.2020 13:37:43,,99657,0,0,7183,2883907,99,Won't Fix 
+,,LIC-143,Improvement,Released,27.02.2020 12:08:42,Linux Client|Math Expressions|,Won't Fix,02.03.2020 08:00:00,02.03.2020 08:00:00,,21373,0,0,20406,2883907,66425,Won't Fix 
+,,LIC-142,New Feature,Released,20.01.2020 13:01:24,Controller Unit|Windows Client|,Cannot Reproduce,20.01.2020 12:40:27,20.01.2020 12:40:27,,4594,0,0,25828,2883907,132447,Cannot Reproduce 
+,,LIC-141,Internal Task,Funnel,05.05.2020 09:17:05,Schema Builder|,,,,,0,0,0,0,0, 
+,,LIC-140,Internal Task,Funnel,28.04.2020 10:10:21,DevExpress|Math Expressions|Windows Client|,,,,,0,0,0,0,0, 
+,,LIC-139,New Feature,Done,21.01.2020 12:38:41,Invoice Management|Messenger Server|,Fixed,21.01.2020 11:46:43,21.01.2020 11:46:43,17.03.2020 15:00:00,42655,0,0,38124,0,2964581,Fixed 
+,,LIC-138,Internal Task,Done,10.02.2020 13:18:22,Printing|Schema Builder|,Fixed,27.02.2020 08:00:00,27.02.2020 08:00:00,07.04.2020 13:09:39,49953,0,0,32115,0,2934452,Fixed 
+,,LIC-137,New Feature,In Progress,27.03.2020 09:49:18,,,05.05.2020 13:32:14,05.05.2020 13:32:14,,57800,0,0,2892690,0,0, 
+,,LIC-136,Internal Task,Released,17.02.2020 15:31:21,Linux Client|Logging|Printing|,Cannot Reproduce,02.03.2020 15:48:38,02.03.2020 15:48:38,,34957,0,0,18168,2883907,69274,Cannot Reproduce 
+,,LIC-135,Improvement,Funnel,15.04.2020 16:51:40,Schema Builder|,,,,,0,0,0,0,0, 
+,,LIC-134,Improvement,Released,19.03.2020 12:01:18,Math Expressions|,Duplicate,03.04.2020 16:16:55,03.04.2020 16:16:55,,27585,0,0,41629,2883907,8757,Duplicate 
+,,LIC-133,Internal Task,Done,27.01.2020 11:08:47,Infrastucture|Math Expressions|Messenger Server|,Incomplete,27.01.2020 08:00:00,27.01.2020 08:00:00,21.02.2020 12:40:31,8698,0,0,27390,0,3000721,Incomplete 
+,,LIC-132,Bug,In Progress,26.03.2020 08:12:05,Controller Unit|,,07.04.2020 13:09:39,07.04.2020 13:09:39,,40245,0,0,2911782,0,0, 
+,,LIC-131,New Feature,Released,21.02.2020 10:38:51,Infrastucture|Linux Client|,Cannot Reproduce,23.03.2020 08:00:00,23.03.2020 08:00:00,,59150,0,0,21653,2883907,36130,Cannot Reproduce 
+,,LIC-130,Bug,In Progress,23.03.2020 09:16:35,,,04.05.2020 09:00:00,04.05.2020 09:00:00,,60463,0,0,2895822,0,0, 
+,,LIC-129,New Feature,In Progress,18.03.2020 13:10:33,,,10.04.2020 09:00:00,10.04.2020 09:00:00,,44844,0,0,2918405,0,0, 
+,,LIC-128,Internal Task,Funnel,28.04.2020 12:23:50,DevExpress|,,,,,0,0,0,0,0, 
+,,LIC-127,Bug,Released,12.02.2020 12:59:47,Controller Unit|Linux Client|Windows Client|,Duplicate,25.02.2020 08:00:00,25.02.2020 08:00:00,,50468,0,0,18672,2883907,60611,Duplicate 
+,,LIC-126,New Feature,In Progress,01.05.2020 13:17:43,Controller Unit|Logging|Math Expressions|,,01.05.2020 09:00:00,01.05.2020 09:00:00,,13861,0,0,2886023,0,0, 
+,,LIC-125,Improvement,Funnel,06.05.2020 12:13:21,,,,,,0,0,0,0,0, 
+,,LIC-124,New Feature,Done,14.02.2020 08:37:02,,Fixed,25.02.2020 12:33:25,25.02.2020 12:33:25,10.04.2020 13:43:19,67704,0,0,13047,0,2930290,Fixed 
+,,LIC-123,Internal Task,In Progress,18.03.2020 09:06:39,Linux Client|,,27.04.2020 09:00:00,27.04.2020 09:00:00,,66233,0,0,2897262,0,0, 
+,,LIC-122,Internal Task,Done,25.02.2020 14:30:38,Invoice Management|Schema Builder|,Fixed,17.03.2020 10:59:17,17.03.2020 10:59:17,22.04.2020 17:00:00,79048,0,0,3180,0,2912621,Fixed 
+,,LIC-121,Bug,Done,13.01.2020 10:29:31,Linux Client|Math Expressions|,Fixed,13.01.2020 08:00:00,13.01.2020 08:00:00,24.01.2020 12:54:45,1152,0,0,14830,0,3041027,Fixed 
+,,LIC-120,New Feature,Done,12.02.2020 10:10:55,Invoice Management|Messenger Server|Timesheets|,Fixed,06.03.2020 14:52:26,06.03.2020 14:52:26,02.04.2020 12:19:49,60773,0,0,9866,0,2943188,Fixed 
+,,LIC-119,Internal Task,In Progress,27.02.2020 14:43:17,Windows Client|,,06.04.2020 13:18:55,06.04.2020 13:18:55,,100640,0,0,2891316,0,0, 
+,,LIC-118,Bug,Done,29.01.2020 15:13:30,Printing|,Fixed,03.02.2020 12:06:02,03.02.2020 12:06:02,20.02.2020 12:23:57,27272,0,0,3072,0,3003340,Fixed 
+,,LIC-117,Improvement,Funnel,07.05.2020 10:15:34,DevExpress|Timesheets|Windows Client|,,,,,0,0,0,0,0, 
+,,LIC-116,Internal Task,Done,30.01.2020 14:24:36,Controller Unit|Infrastucture|Math Expressions|,Fixed,31.01.2020 08:00:00,31.01.2020 08:00:00,03.03.2020 16:00:00,5435,0,0,42178,0,2984681,Fixed 
+,,LIC-115,New Feature,Done,25.02.2020 15:55:06,,Fixed,06.03.2020 12:23:11,06.03.2020 12:23:11,19.03.2020 15:30:00,15628,0,0,17466,0,2961671,Fixed 
+,,LIC-114,Bug,Done,04.02.2020 08:38:12,,Cannot Reproduce,04.02.2020 15:33:43,04.02.2020 15:33:43,14.02.2020 14:57:55,10084,0,0,4692,0,3010663,Cannot Reproduce 
+,,LIC-113,Improvement,In Progress,06.03.2020 15:07:04,,,30.03.2020 13:40:48,30.03.2020 13:40:48,,59635,0,0,2920776,0,0, 
+,,LIC-112,Internal Task,Funnel,10.04.2020 14:43:20,Logging|,,,,,0,0,0,0,0, 
+,,LIC-111,Internal Task,Released,11.02.2020 13:56:54,Invoice Management|,Won't Fix,20.02.2020 12:18:13,20.02.2020 12:18:13,,34850,0,0,27141,2883907,69141,Won't Fix 
+,,LIC-110,Internal Task,Done,22.01.2020 15:22:25,Infrastucture|,Fixed,22.01.2020 12:08:18,22.01.2020 12:08:18,30.01.2020 11:56:49,892,0,0,3078,0,3039787,Fixed 
+,,LIC-109,Internal Task,Done,11.02.2020 10:21:51,Linux Client|Logging|Math Expressions|,Incomplete,27.02.2020 08:00:00,27.02.2020 08:00:00,01.04.2020 13:37:31,59738,0,0,12456,0,2943064,Incomplete 
+,,LIC-108,New Feature,Done,04.02.2020 11:32:38,,Fixed,13.02.2020 14:50:35,13.02.2020 14:50:35,17.04.2020 17:00:00,56724,0,0,48721,0,2919821,Fixed 
+,,LIC-107,Bug,In Progress,08.04.2020 10:11:01,,,27.04.2020 13:27:56,27.04.2020 13:27:56,,37382,0,0,2895807,0,0, 
+,,LIC-106,New Feature,Done,10.02.2020 15:43:22,Infrastucture|Messenger Server|,Fixed,14.02.2020 11:34:29,14.02.2020 11:34:29,05.03.2020 16:00:00,14631,0,0,19945,0,2981801,Fixed 
+,,LIC-105,New Feature,In Progress,05.03.2020 10:07:04,,,15.04.2020 12:38:18,15.04.2020 12:38:18,,59191,0,0,2922963,0,0, 
+,,LIC-104,Internal Task,Funnel,12.05.2020 09:29:51,Printing|,,,,,0,0,0,0,0, 
+,,LIC-103,Bug,Released,31.01.2020 14:55:05,Invoice Management|Math Expressions|,Duplicate,04.02.2020 11:25:27,04.02.2020 11:25:27,,47844,0,0,11023,2883907,88048,Duplicate 
+,,LIC-102,Internal Task,Done,13.03.2020 09:14:20,Controller Unit|Messenger Server|,Cannot Reproduce,13.04.2020 09:00:00,13.04.2020 09:00:00,23.04.2020 13:00:11,54654,0,0,4610,0,2911421,Cannot Reproduce 
+,,LIC-101,New Feature,Funnel,01.04.2020 13:27:10,DevExpress|Infrastucture|Math Expressions|,,,,,0,0,0,0,0, 
+,,LIC-100,New Feature,Funnel,03.04.2020 09:06:41,,,,,,0,0,0,0,0, 
+,,LIC-99,New Feature,Funnel,07.05.2020 12:04:44,Infrastucture|,,,,,0,0,0,0,0, 
+,,LIC-98,Internal Task,Done,24.02.2020 14:14:09,Controller Unit|Windows Client|,Fixed,03.03.2020 08:00:00,03.03.2020 08:00:00,25.03.2020 11:40:40,25902,0,0,7210,0,2963192,Fixed 
+,,LIC-97,Improvement,Done,14.01.2020 10:52:16,Invoice Management|Schema Builder|,Incomplete,14.01.2020 08:00:00,14.01.2020 08:00:00,21.01.2020 12:34:10,9937,0,0,244,0,3045367,Incomplete 
+,,LIC-96,Bug,Done,24.03.2020 13:54:14,Controller Unit|Linux Client|,Fixed,03.04.2020 09:00:00,03.04.2020 09:00:00,10.04.2020 13:13:55,18678,0,0,5760,0,2930127,Fixed 
+,,LIC-95,Improvement,Released,05.02.2020 08:44:54,Logging|,Incomplete,12.02.2020 08:00:00,12.02.2020 08:00:00,,25751,0,0,9321,2883907,105014,Incomplete 
+,,LIC-94,Bug,Done,28.01.2020 10:12:27,,Incomplete,28.01.2020 12:07:31,28.01.2020 12:07:31,03.03.2020 15:00:00,8644,0,0,42042,0,2984741,Incomplete 
+,,LIC-93,New Feature,Funnel,30.03.2020 10:51:21,DevExpress|,,08.05.2020 13:15:36,08.05.2020 13:15:36,,2941752,0,0,4358,0,0, 
+,,LIC-92,New Feature,Released,05.03.2020 08:19:53,,Duplicate,17.03.2020 11:30:24,17.03.2020 11:30:24,,31662,0,0,40857,2883907,25834,Duplicate 
+,,LIC-91,New Feature,Funnel,23.04.2020 10:32:27,Linux Client|,,,,,0,0,0,0,0, 
+,,LIC-90,New Feature,In Progress,17.02.2020 13:32:15,DevExpress|Printing|,,27.03.2020 11:24:45,27.03.2020 11:24:45,,69218,0,0,2937209,0,0, 
+,,LIC-89,Bug,Funnel,04.05.2020 14:12:40,DevExpress|Printing|,,,,,0,0,0,0,0, 
+,,LIC-88,Improvement,Funnel,17.03.2020 14:40:19,Invoice Management|Windows Client|,,07.04.2020 09:00:00,07.04.2020 09:00:00,,2953097,0,0,11500,0,0, 
+,,LIC-87,New Feature,Released,15.01.2020 15:32:06,Infrastucture|Invoice Management|Messenger Server|,Resolved,15.01.2020 11:53:48,15.01.2020 11:53:48,,22989,0,0,14755,2883907,132173,Resolved 
+,,LIC-86,Bug,Done,29.01.2020 08:11:02,Infrastucture|Schema Builder|,Fixed,30.01.2020 11:24:32,30.01.2020 11:24:32,24.02.2020 10:39:32,29922,0,0,7664,0,2996522,Fixed 
+,,LIC-85,Improvement,Funnel,16.03.2020 09:17:35,Logging|,,02.04.2020 12:57:43,02.04.2020 12:57:43,,2917390,0,0,40374,0,8599, 
+,,LIC-84,Bug,Done,10.02.2020 10:30:58,,Fixed,06.03.2020 08:00:00,06.03.2020 08:00:00,13.03.2020 12:05:31,41854,0,0,4320,0,2970516,Fixed 
+,,LIC-83,Bug,Funnel,07.04.2020 13:14:45,DevExpress|Logging|Timesheets|,,,,,0,0,0,0,0, 
+,,LIC-82,New Feature,Funnel,17.04.2020 09:50:27,DevExpress|Invoice Management|Printing|,,,,,0,0,0,0,0, 
+,,LIC-81,New Feature,Funnel,15.04.2020 11:39:13,Windows Client|,,20.04.2020 09:00:00,20.04.2020 09:00:00,,2922572,0,0,450,0,0, 
+,,LIC-80,New Feature,Done,26.02.2020 09:35:07,,Fixed,12.03.2020 08:00:00,12.03.2020 08:00:00,17.04.2020 12:28:46,51464,0,0,22145,0,2920093,Fixed 
+,,LIC-79,Internal Task,Released,29.01.2020 10:20:06,Invoice Management|Timesheets|,Cannot Reproduce,30.01.2020 12:10:33,30.01.2020 12:10:33,,7034,0,0,43626,2883907,99413,Cannot Reproduce 
+,,LIC-78,New Feature,Done,20.01.2020 11:09:06,Linux Client|Schema Builder|,Fixed,20.01.2020 08:00:00,20.01.2020 08:00:00,22.01.2020 12:24:05,2754,0,0,200,0,3043937,Fixed 
+,,LIC-77,Improvement,Done,22.01.2020 09:57:00,,Won't Fix,22.01.2020 08:00:00,22.01.2020 08:00:00,28.01.2020 15:34:05,6097,0,0,2880,0,3035107,Won't Fix 
+,,LIC-76,New Feature,Done,17.01.2020 09:31:12,Timesheets|,Fixed,17.01.2020 08:00:00,17.01.2020 08:00:00,29.01.2020 14:30:00,10529,0,0,7046,0,3033731,Fixed 
+,,LIC-75,Improvement,Released,05.02.2020 13:58:18,,Cannot Reproduce,13.02.2020 12:59:47,13.02.2020 12:59:47,,62804,0,0,40820,2883907,36149,Cannot Reproduce 
+,,LIC-74,New Feature,In Progress,20.03.2020 13:33:43,Messenger Server|Schema Builder|,,22.04.2020 13:53:28,22.04.2020 13:53:28,,47929,0,0,2912418,0,0, 
+,,LIC-73,Internal Task,Done,25.02.2020 10:02:53,Invoice Management|,Fixed,30.03.2020 13:57:42,30.03.2020 13:57:42,16.04.2020 13:22:56,70769,0,0,2870,0,2921478,Fixed 
+,,LIC-72,Internal Task,Funnel,01.05.2020 10:58:10,Printing|,,,,,0,0,0,0,0, 
+,,LIC-71,Improvement,In Progress,24.04.2020 14:34:48,Invoice Management|Linux Client|,,07.05.2020 13:59:23,07.05.2020 13:59:23,,18684,0,0,2891202,0,0, 
+,,LIC-70,Bug,Funnel,11.03.2020 11:46:34,,,21.04.2020 09:00:00,21.04.2020 09:00:00,,2957071,0,0,16341,0,0, 
+,,LIC-69,Improvement,Released,14.02.2020 14:59:04,Infrastucture|Linux Client|,Incomplete,27.02.2020 08:00:00,27.02.2020 08:00:00,,45595,0,0,23643,2883907,57514,Incomplete 
+,,LIC-68,New Feature,In Progress,19.03.2020 14:25:53,Logging|Timesheets|,,07.04.2020 09:00:00,07.04.2020 09:00:00,,72814,0,0,2888922,0,0, 
+,,LIC-67,Internal Task,In Progress,05.03.2020 14:27:30,Infrastucture|Logging|Schema Builder|,,10.04.2020 13:44:19,10.04.2020 13:44:19,,63190,0,0,2918702,0,0, 
+,,LIC-66,Internal Task,Released,17.02.2020 09:20:05,,Resolved,19.02.2020 08:00:00,19.02.2020 08:00:00,,31755,0,0,45085,2883907,45930,Resolved 
+,,LIC-65,Bug,Funnel,28.04.2020 14:34:51,,,,,,0,0,0,0,0, 
+,,LIC-64,Bug,Funnel,06.04.2020 09:01:33,Math Expressions|Schema Builder|,,,,,0,0,0,0,0, 
+,,LIC-63,New Feature,In Progress,21.02.2020 08:09:42,,,25.02.2020 08:00:00,25.02.2020 08:00:00,,71536,0,0,2929452,0,0, 
+,,LIC-62,New Feature,Funnel,28.02.2020 11:13:54,,,27.03.2020 12:30:21,27.03.2020 12:30:21,,2952963,0,0,20969,0,16791, 
+,,LIC-61,Improvement,In Progress,25.03.2020 09:51:03,,,15.04.2020 13:43:57,15.04.2020 13:43:57,,53317,0,0,2900052,0,0, 
+,,LIC-60,New Feature,Funnel,06.05.2020 15:33:53,Printing|,,,,,0,0,0,0,0, 
+,,LIC-59,Internal Task,Released,24.01.2020 13:27:33,Schema Builder|,Resolved,24.01.2020 15:59:45,24.01.2020 15:59:45,,8422,0,0,25936,2883907,122725,Resolved 
+,,LIC-58,Internal Task,Funnel,19.03.2020 09:26:17,Timesheets|,,,,,0,0,0,0,0, 
+,,LIC-57,Improvement,Done,17.01.2020 12:18:16,Printing|,Fixed,17.01.2020 08:00:00,17.01.2020 08:00:00,04.02.2020 16:00:00,24438,0,0,499,0,3026203,Fixed 
+,,LIC-56,Improvement,Done,20.02.2020 09:34:45,DevExpress|Timesheets|,Fixed,11.03.2020 08:00:00,11.03.2020 08:00:00,03.04.2020 16:16:55,32854,0,0,29464,0,2940024,Fixed 
+,,LIC-55,Bug,Funnel,27.04.2020 16:21:36,Math Expressions|,,,,,0,0,0,0,0, 
+,,LIC-54,Improvement,Funnel,22.04.2020 10:20:33,Messenger Server|Printing|Schema Builder|,,29.04.2020 13:40:11,29.04.2020 13:40:11,,2912821,0,0,199,0,0, 
+,,LIC-53,Improvement,Funnel,07.04.2020 14:45:51,Math Expressions|Messenger Server|,,,,,0,0,0,0,0, 
+,,LIC-52,Improvement,Released,16.01.2020 11:22:50,DevExpress|,Won't Fix,16.01.2020 08:00:00,16.01.2020 08:00:00,,5488,0,0,6307,2883907,156935,Won't Fix 
+,,LIC-51,Improvement,Released,18.02.2020 11:59:20,,Duplicate,20.03.2020 08:00:00,20.03.2020 08:00:00,,45976,0,0,4615,2883907,70583,Duplicate 
+,,LIC-50,Internal Task,Funnel,28.02.2020 15:07:38,Math Expressions|,,23.03.2020 08:00:00,23.03.2020 08:00:00,,2937244,0,0,48982,0,4265, 
+,,LIC-49,Bug,Released,06.03.2020 08:41:24,Logging|,Duplicate,08.04.2020 12:46:28,08.04.2020 12:46:28,,47997,0,0,7221,2883907,41674,Duplicate 
+,,LIC-48,Bug,Done,04.02.2020 14:11:27,DevExpress|Infrastucture|Math Expressions|,Incomplete,25.02.2020 08:00:00,25.02.2020 08:00:00,27.03.2020 16:00:00,53485,0,0,10290,0,2961332,Incomplete 
+,,LIC-47,Improvement,In Progress,07.04.2020 16:26:18,,,04.05.2020 13:49:55,04.05.2020 13:49:55,,38723,0,0,2895532,0,0, 
+,,LIC-46,New Feature,Funnel,27.04.2020 12:29:53,Linux Client|Math Expressions|Timesheets|,,,,,0,0,0,0,0, 
+,,LIC-45,New Feature,Released,28.02.2020 13:11:52,DevExpress|Timesheets|,Resolved,27.03.2020 08:00:00,27.03.2020 08:00:00,,56874,0,0,23806,2883907,26021,Resolved 
+,,LIC-44,Bug,Funnel,13.04.2020 14:32:00,Logging|Windows Client|,,30.04.2020 13:07:23,30.04.2020 13:07:23,,2919927,0,0,5802,0,0, 
+,,LIC-43,Improvement,Funnel,26.03.2020 15:29:34,Timesheets|,,27.04.2020 09:00:00,27.04.2020 09:00:00,,2949898,0,0,1693,0,0, 
+,,LIC-42,New Feature,Funnel,04.05.2020 09:16:06,Windows Client|,,,,,0,0,0,0,0, 
+,,LIC-41,Improvement,Released,20.02.2020 14:48:40,DevExpress|Infrastucture|,Won't Fix,23.03.2020 08:00:00,23.03.2020 08:00:00,,55567,0,0,10773,2883907,51784,Won't Fix 
+,,LIC-40,Bug,Funnel,25.03.2020 12:28:12,Infrastucture|Invoice Management|Math Expressions|,,,,,0,0,0,0,0, 
+,,LIC-39,Internal Task,Done,19.02.2020 09:08:38,,Fixed,10.03.2020 12:09:09,10.03.2020 12:09:09,21.04.2020 12:38:58,61939,0,0,27546,0,2914322,Fixed 
+,,LIC-38,Bug,Done,25.02.2020 11:31:26,Infrastucture|Printing|,Fixed,23.03.2020 11:18:13,23.03.2020 11:18:13,23.04.2020 13:37:43,59790,0,0,23852,0,2911384,Fixed 
+,,LIC-37,New Feature,Released,17.02.2020 14:07:50,Infrastucture|Printing|,Resolved,25.02.2020 12:17:19,25.02.2020 12:17:19,,42415,0,0,2631,2883907,77438,Resolved 
+,,LIC-36,New Feature,Released,12.02.2020 15:57:25,DevExpress|Math Expressions|Messenger Server|,Resolved,25.02.2020 08:00:00,25.02.2020 08:00:00,,19703,0,0,257,2883907,109616,Resolved 
+,,LIC-35,Internal Task,Funnel,04.05.2020 15:44:51,,,,,,0,0,0,0,0, 
+,,LIC-34,Internal Task,Released,01.04.2020 09:20:49,Schema Builder|Windows Client|,Cannot Reproduce,17.04.2020 09:00:00,17.04.2020 09:00:00,,37324,0,0,21913,2883907,175,Cannot Reproduce 
+,,LIC-33,Internal Task,Done,25.02.2020 12:56:10,Messenger Server|Timesheets|,Fixed,25.03.2020 14:24:27,25.03.2020 14:24:27,16.04.2020 12:12:21,50200,0,0,23195,0,2921549,Fixed 
+,,LIC-32,Internal Task,Done,24.03.2020 09:59:19,Controller Unit|,Fixed,10.04.2020 09:00:00,10.04.2020 09:00:00,13.04.2020 13:36:08,28760,0,0,255,0,2925785,Fixed 
+,,LIC-31,Improvement,Released,30.01.2020 09:17:31,Printing|,Incomplete,03.02.2020 08:00:00,03.02.2020 08:00:00,,36005,0,0,192,2883907,112498,Incomplete 
+,,LIC-30,New Feature,Funnel,23.03.2020 14:56:07,,,,,,0,0,0,0,0, 
+,,LIC-29,New Feature,Funnel,06.05.2020 10:37:57,,,,,,0,0,0,0,0, 
+,,LIC-28,Bug,Released,27.01.2020 08:22:40,Invoice Management|Logging|,Resolved,27.01.2020 08:00:00,27.01.2020 08:00:00,,4040,0,0,28007,2883907,121024,Resolved 
+,,LIC-27,Improvement,Done,06.02.2020 12:08:43,,Fixed,18.02.2020 08:00:00,18.02.2020 08:00:00,17.04.2020 13:07:49,33922,0,0,19467,0,2968960,Fixed 
+,,LIC-26,Improvement,Released,20.01.2020 09:11:24,Controller Unit|DevExpress|,Incomplete,20.01.2020 08:00:00,20.01.2020 08:00:00,,5758,0,0,8820,2883907,148524,Incomplete 
+,,LIC-25,Improvement,Funnel,17.03.2020 09:16:44,Invoice Management|Logging|Printing|,,30.04.2020 09:00:00,30.04.2020 09:00:00,,2963191,0,0,1733,0,0, 
+,,LIC-24,New Feature,Funnel,26.02.2020 14:58:07,Timesheets|,,26.02.2020 12:38:30,26.02.2020 12:38:30,,2909837,0,0,83543,0,0, 
+,,LIC-23,Internal Task,Funnel,27.04.2020 14:17:25,Logging|Schema Builder|,,,,,0,0,0,0,0, 
+,,LIC-22,New Feature,Funnel,09.04.2020 10:07:37,,,,,,0,0,0,0,0, 
+,,LIC-21,Epic,Funnel,04.05.2020 10:58:42,Schema Builder|,,,,,0,0,0,0,0, 
+,,LIC-20,Epic,Done,13.01.2020 08:00:00,,Fixed,13.01.2020 10:59:02,13.01.2020 10:59:02,21.02.2020 16:00:00,1870,0,0,54765,0,3000521,Fixed 
+,,LIC-19,Epic,Funnel,15.04.2020 15:06:44,Infrastucture|,,,,,0,0,0,0,0, 
+,,LIC-18,Epic,In Progress,19.02.2020 12:43:09,,,24.02.2020 10:30:05,24.02.2020 10:30:05,,27031,0,0,2976563,0,0, 
+,,LIC-17,Epic,Funnel,20.02.2020 08:21:47,,,25.02.2020 11:00:29,25.02.2020 11:00:29,,2943141,0,0,59273,0,0, 
+,,LIC-16,Epic,Funnel,24.04.2020 10:35:25,Controller Unit|Math Expressions|,,,,,0,0,0,0,0, 
+,,LIC-15,Epic,Funnel,26.03.2020 10:32:20,,,17.04.2020 12:08:34,17.04.2020 12:08:34,,2941753,0,0,10135,0,0, 
+,,LIC-14,Epic,Done,22.01.2020 12:05:09,Logging|,Fixed,22.01.2020 15:00:00,22.01.2020 15:00:00,24.03.2020 12:57:27,79212,0,0,10114,0,2954624,Fixed 
+,,LIC-13,Epic,Funnel,04.03.2020 12:22:24,Schema Builder|,,17.03.2020 16:00:00,17.03.2020 16:00:00,,2966119,0,0,17337,0,0, 
+,,LIC-12,Epic,Funnel,15.04.2020 10:25:39,,,,,,0,0,0,0,0, 
+,,LIC-11,Epic,Funnel,16.01.2020 13:27:56,Logging|,,17.01.2020 11:17:11,17.01.2020 11:17:11,,3019783,0,0,28853,0,3871, 
+,,LIC-10,Epic,Funnel,06.04.2020 14:29:52,,,20.04.2020 12:12:36,20.04.2020 12:12:36,,2935554,0,0,257,0,0, 
+,,LIC-9,Epic,Funnel,27.03.2020 13:21:37,Infrastucture|Linux Client|Logging|,,16.04.2020 13:55:46,16.04.2020 13:55:46,,2926948,0,0,23329,0,0, 
+,,LIC-8,Epic,Released,07.02.2020 13:57:16,,Won't Fix,14.02.2020 16:00:00,14.02.2020 16:00:00,,20297,0,0,77802,2883907,38794,Won't Fix 
+,,LIC-7,Epic,In Progress,10.02.2020 08:10:24,Printing|,,26.02.2020 16:00:00,26.02.2020 16:00:00,,58429,0,0,2958399,0,0, 
+,,LIC-6,Epic,Released,24.01.2020 08:26:16,,Incomplete,03.02.2020 11:12:35,03.02.2020 11:12:35,,53342,0,0,40506,2883907,63536,Incomplete 
+,,LIC-5,Epic,In Progress,19.02.2020 10:48:23,,,03.03.2020 11:17:09,03.03.2020 11:17:09,,81761,0,0,2921949,0,0, 
+,,LIC-4,Epic,Funnel,20.01.2020 15:18:33,Math Expressions|Printing|,,21.01.2020 15:30:00,21.01.2020 15:30:00,,2993411,0,0,53226,0,0, 
+,,LIC-3,Epic,Funnel,08.05.2020 13:32:17,Linux Client|Messenger Server|Schema Builder|,,,,,0,0,0,0,0, 
+,,LIC-2,Epic,Funnel,02.03.2020 14:04:41,Controller Unit|Math Expressions|Timesheets|,,31.03.2020 13:53:43,31.03.2020 13:53:43,,2954293,0,0,31939,0,0, 
+,,LIC-1,Epic,In Progress,12.03.2020 08:50:44,DevExpress|Timesheets|,,02.04.2020 16:00:00,02.04.2020 16:00:00,,46434,0,0,2925714,0,0, 

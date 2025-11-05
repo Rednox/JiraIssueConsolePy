@@ -1,25 +1,39 @@
-"""Async Jira client wrapper (minimal httpx-based implementation).
+"""HTTP client and offline input handling for Jira data."""
 
-This isolates HTTP interactions behind a simple async function so core logic stays
-independent and easily testable.
-"""
-from typing import List, Dict, Any, Optional
-import httpx
-import os
 import asyncio
 import logging
+from typing import Dict, List, Optional, Any
 
-from .config import from_env, Config
+import httpx
+
+from .config import Config, from_env
+from .core.json_input import load_issues_from_json
 
 logger = logging.getLogger(__name__)
 
 
-async def fetch_issues(project_key: str, jql: Optional[str] = None, cfg: Optional[Config] = None) -> List[Dict[str, Any]]:
-    """Fetch issues asynchronously from Jira REST API (minimal implementation).
-
-    Returns a list of raw issue dicts. This function is intentionally small — keep
-    business logic in `core` and use tests to mock HTTP calls.
+async def fetch_issues(
+    project_key: str, 
+    jql: Optional[str] = None, 
+    cfg: Optional[Config] = None,
+    input_file: Optional[str] = None
+) -> List[Dict[str, Any]]:
+    """Fetch issues from Jira REST API or load from JSON file.
+    
+    Args:
+        project_key: The Jira project key (e.g., 'PROJ')
+        jql: Optional JQL query to filter issues
+        cfg: Optional configuration override
+        input_file: Optional path to JSON file containing issue data
+        
+    Returns:
+        List of raw issue dicts either from API or JSON file
+        
+    If input_file is provided, data will be loaded from file instead of API.
     """
+    if input_file:
+        return load_issues_from_json(input_file)
+        
     if cfg is None:
         cfg = from_env()
 
@@ -47,8 +61,9 @@ async def fetch_issues(project_key: str, jql: Optional[str] = None, cfg: Optiona
             async with httpx.AsyncClient(timeout=cfg.request_timeout, headers=headers, auth=auth) as client:
                 resp = await client.get(url, params=params)
                 resp.raise_for_status()
-                data = resp.json()
-                return data.get("issues", [])
+                data: Dict[str, Any] = resp.json()
+                issues: List[Dict[str, Any]] = data.get("issues", [])
+                return issues
         except httpx.RequestError as exc:
             logger.debug("HTTP request failed on attempt %s: %s", attempt, exc)
             if attempt >= cfg.max_retries:
