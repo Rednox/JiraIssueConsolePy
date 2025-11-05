@@ -1,0 +1,8 @@
+# Development dependencies
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-watch>=4.2.0
+ruff>=0.1.0
+mypy>=1.5.0
+respx>=0.20.0  # for mocking HTTP in tests
+httpx>=0.24.0  # for async HTTP client (and testing)
