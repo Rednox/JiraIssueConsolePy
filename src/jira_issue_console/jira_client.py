@@ -16,7 +16,8 @@ async def fetch_issues(
     project_key: str, 
     jql: Optional[str] = None, 
     cfg: Optional[Config] = None,
-    input_file: Optional[str] = None
+    input_file: Optional[str] = None,
+    expand_changelog: bool = True
 ) -> List[Dict[str, Any]]:
     """Fetch issues from Jira REST API or load from JSON file.
     
@@ -25,6 +26,7 @@ async def fetch_issues(
         jql: Optional JQL query to filter issues
         cfg: Optional configuration override
         input_file: Optional path to JSON file containing issue data
+        expand_changelog: If True, request changelog data from API (default: True)
         
     Returns:
         List of raw issue dicts either from API or JSON file
@@ -38,7 +40,9 @@ async def fetch_issues(
         cfg = from_env()
 
     url = f"{cfg.jira_base_url.rstrip('/')}/rest/api/2/search"
-    params = {"jql": jql or f"project={project_key} AND status!=Done"}
+    params: Dict[str, Any] = {"jql": jql or f"project={project_key} AND status!=Done"}
+    if expand_changelog:
+        params["expand"] = "changelog"
 
     # Determine auth headers/auth object from config
     jira_user = cfg.jira_user

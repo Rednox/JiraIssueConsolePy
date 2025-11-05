@@ -82,7 +82,9 @@ def extract_transitions_from_issue(
     created_date = _parse_jira_datetime(created_str)
     
     # Try to get initial status from first changelog entry or current status
-    changelog = fields.get("changelog", {}).get("histories", [])
+    # Changelog can be at top level (Jira API) or in fields (some exports)
+    changelog_obj = issue.get("changelog") or fields.get("changelog", {})
+    changelog = changelog_obj.get("histories", []) if isinstance(changelog_obj, dict) else []
     initial_status = "Open"  # default
     if changelog:
         first_history = min(changelog, key=lambda h: h["created"])
