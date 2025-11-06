@@ -33,12 +33,25 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--workflow", metavar="WORKFLOW_FILE", help="Workflow mapping file")
     p.add_argument("--status-timing", metavar="CSV_FILE", help="Export status timing to CSV")
     p.add_argument("--transitions", metavar="CSV_FILE", help="Export transitions to CSV")
+    p.add_argument("--business-days", action="store_true", help="Use business days (exclude weekends) for time calculations")
     return p
 
 
 async def async_main(argv: Optional[List[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    
+    # Create config object for business days calculations
+    from .config import Config
+    config = None
+    if args.business_days:
+        config = Config(
+            jira_base_url="",  # Not needed for CLI-only usage
+            jira_user=None,
+            jira_api_token=None,
+            use_business_days=True,
+            holidays=set()
+        )
     
     # Load workflow config if provided
     workflow = None
@@ -79,7 +92,7 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
 
     # Export cycle times if requested
     if args.csv:
-        rows = export_cycle_time_rows(raw_issues)
+        rows = export_cycle_time_rows(raw_issues, config=config)
         csv_str = export_cycle_time_csv(rows)
         if csv_str is not None:  # type narrowing
             with open(args.csv, "w", encoding="utf-8") as f:
@@ -104,7 +117,14 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
     if args.status_timing:
         # Prepare issues with transitions for timing calculation
         issues_with_transitions = prepare_issues_with_transitions(raw_issues, workflow=None)
-        rows = export_status_timing_rows(issues_with_transitions, workflow=workflow)
+        use_business_days = config.use_business_days if config else False
+        holidays = config.holidays if config else set()
+        rows = export_status_timing_rows(
+            issues_with_transitions, 
+            workflow=workflow,
+            use_business_days=use_business_days,
+            holidays=holidays
+        )
         with open(args.status_timing, "w", encoding="utf-8", newline="") as f:
             if rows:
                 # Get all unique status names from all rows
@@ -168,6 +188,7 @@ if click is not None:
     @click.option("--workflow", "workflow_file", help="Workflow mapping file")
     @click.option("--status-timing", "status_timing_file", help="Export status timing to CSV")
     @click.option("--transitions", "transitions_file", help="Export transitions to CSV")
+    @click.option("--business-days", "business_days", is_flag=True, help="Use business days for time calculations")
     def app(
         project: str,
         csv_file: Optional[str],
@@ -176,7 +197,8 @@ if click is not None:
         input_file: Optional[str],
         workflow_file: Optional[str],
         status_timing_file: Optional[str],
-        transitions_file: Optional[str]
+        transitions_file: Optional[str],
+        business_days: bool
     ):
         """Compatibility Click command used by tests (runner.invoke(app, args))."""
         argv: List[str] = [project]
@@ -194,6 +216,8 @@ if click is not None:
             argv.extend(["--status-timing", status_timing_file])
         if transitions_file:
             argv.extend(["--transitions", transitions_file])
+        if business_days:
+            argv.append("--business-days")
         rc = asyncio.run(async_main(argv))
         if rc:
             raise SystemExit(rc)
