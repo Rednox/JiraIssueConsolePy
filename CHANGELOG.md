@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **CLI Integration Completions** - Wired 4 previously unimplemented CLI features:
+  - `--input` JSON offline mode now fully functional
+  - `--workflow` workflow mapping integration complete
+  - `--status-timing` status timing CSV export working
+  - `--transitions` status transition CSV export working
+- **Helper Functions**:
+  - `extract_transitions_from_issue()`: Extract transitions from raw Jira issues
+  - `prepare_issues_with_transitions()`: Batch process issues for exports
+- **Enhanced Workflow Parser**:
+  - Now supports simple format: `From Status -> To Group`
+  - Maintains backward compatibility with full format
+  - Auto-generates state markers for simple format
+- **Documentation**:
+  - User stories document for all missing integrations
+  - Implementation summary with technical details
+
+### Fixed
+- Changelog extraction now supports both API format (top-level) and export format (in fields)
+- All export modes work with offline JSON input
+- Workflow mapping properly applied to all export functions
+
+### Changed
+- `jira_client.fetch_issues()` now has `expand_changelog` parameter (default: True)
+
 ## [0.1.0-alpha] - 2025-11-06
 
 ### Added
@@ -51,12 +78,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configuration: Updated pyproject.toml with package metadata and classifiers
 
 ### Known Issues
-- 7 acceptance tests fail due to unimplemented CLI features:
-  - `--input` JSON offline mode (parsing only)
-  - `--workflow` workflow mapping integration
-  - `--status-timing` status timing export
-  - `--transitions` transitions export
-  These features have argument parsing but need implementation in async_main()
+- `--business-days` flag not yet wired to CLI (infrastructure exists in business_days.py)
 
 ### Technical Details
 - Python compatibility: 3.9+
