@@ -17,6 +17,10 @@ from .core import issues
 from .core.csv_export import export_cycle_time_csv
 from .core.cycletime import export_cycle_time_rows
 from .core.cfd import calculate_cfd_data, export_cfd_rows
+from .core.json_input import load_issues_from_json
+from .core.workflow_config import load_workflow_config
+from .core.issue_timing import export_status_timing_rows, export_transitions_rows
+from .core.issues import prepare_issues_with_transitions
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -35,15 +39,47 @@ def build_parser() -> argparse.ArgumentParser:
 async def async_main(argv: Optional[List[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
-    # Only pass the jql argument when provided to keep test mocks compatible
-    if getattr(args, "jql", None):
-        items = await issues.list_issues(args.project, jql=args.jql)
+    
+    # Load workflow config if provided
+    workflow = None
+    if args.workflow:
+        workflow = load_workflow_config(args.workflow)
+    
+    # Load issues from JSON file (offline mode) or from Jira API
+    if args.input:
+        # Offline mode: load from JSON file
+        raw_issues = load_issues_from_json(args.input)
     else:
-        items = await issues.list_issues(args.project)
+        # Online mode: fetch from Jira API
+        # For display mode, use simplified format
+        # For export modes, we need full format with changelog
+        if args.csv or args.cfd or args.status_timing or args.transitions:
+            # Need full issue data for exports - fetch with expand=changelog
+            from . import jira_client
+            if getattr(args, "jql", None):
+                raw_issues = await jira_client.fetch_issues(args.project, jql=args.jql)
+            else:
+                raw_issues = await jira_client.fetch_issues(args.project)
+        else:
+            # Simple display mode - use simplified format
+            if getattr(args, "jql", None):
+                items = await issues.list_issues(args.project, jql=args.jql)
+            else:
+                items = await issues.list_issues(args.project)
+            # Print a simple table header and rows
+            header_key = "KEY"
+            header_summary = "SUMMARY"
+            print(f"{header_key:<16} {header_summary}")
+            print(f"{'-'*16} {'-'*40}")
+            for it in items:
+                key = it.get('key', '')
+                summary = it.get('summary', '') or ''
+                print(f"{key:<16} {summary}")
+            return 0
 
     # Export cycle times if requested
     if args.csv:
-        rows = export_cycle_time_rows(items)
+        rows = export_cycle_time_rows(raw_issues)
         csv_str = export_cycle_time_csv(rows)
         if csv_str is not None:  # type narrowing
             with open(args.csv, "w", encoding="utf-8") as f:
@@ -53,7 +89,9 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
 
     # Export CFD data if requested
     if args.cfd:
-        cfd_data = calculate_cfd_data(items)
+        # Prepare issues with transitions for CFD calculation
+        issues_with_transitions = prepare_issues_with_transitions(raw_issues, workflow=None)
+        cfd_data = calculate_cfd_data(issues_with_transitions, workflow=workflow)
         rows = export_cfd_rows(cfd_data)
         with open(args.cfd, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=["Date"] + sorted(set(status for row in rows for status in row.keys() if status != "Date")))
@@ -62,14 +100,46 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         print(f"Exported CFD data to {args.cfd}")
         return 0
 
-    # Print a simple table header and rows
+    # Export status timing if requested
+    if args.status_timing:
+        # Prepare issues with transitions for timing calculation
+        issues_with_transitions = prepare_issues_with_transitions(raw_issues, workflow=None)
+        rows = export_status_timing_rows(issues_with_transitions, workflow=workflow)
+        with open(args.status_timing, "w", encoding="utf-8", newline="") as f:
+            if rows:
+                # Get all unique status names from all rows
+                all_statuses = set()
+                for row in rows:
+                    all_statuses.update(k for k in row.keys() if k != "key")
+                fieldnames = ["key"] + sorted(all_statuses)
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(rows)
+        print(f"Exported status timing to {args.status_timing}")
+        return 0
+
+    # Export transitions if requested
+    if args.transitions:
+        # Prepare issues with transitions for export
+        issues_with_transitions = prepare_issues_with_transitions(raw_issues, workflow=None)
+        rows = export_transitions_rows(issues_with_transitions, workflow=workflow)
+        with open(args.transitions, "w", encoding="utf-8", newline="") as f:
+            fieldnames = ["key", "from_status", "to_status", "date"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(rows)
+        print(f"Exported transitions to {args.transitions}")
+        return 0
+
+    # If no export flag was provided but we're in offline mode, print issues
     header_key = "KEY"
     header_summary = "SUMMARY"
     print(f"{header_key:<16} {header_summary}")
     print(f"{'-'*16} {'-'*40}")
-    for it in items:
+    for it in raw_issues:
         key = it.get('key', '')
-        summary = it.get('summary', '') or ''
+        fields = it.get('fields', {})
+        summary = fields.get('summary', '') or ''
         print(f"{key:<16} {summary}")
     return 0
 
