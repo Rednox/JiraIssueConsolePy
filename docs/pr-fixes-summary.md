@@ -196,9 +196,19 @@ Previously failing, should now pass:
 - [x] All code changes follow existing patterns
 - [x] Type annotations are complete
 
-## Next Steps
+## Recent Updates
 
-1. ✅ CI checks should pass
-2. ✅ All tests should run successfully
-3. 🔄 Merge PR when CI is green
-4. 📋 Future: Implement --business-days flag (Story 5)
+### Business Days Implementation (Latest) ✅
+- Implemented `--business-days` CLI flag for all time calculations
+- Added unit tests for CLI business days integration
+- Updated documentation to reflect completion
+- All 5 user stories are now complete
+
+## Status
+
+All planned features have been implemented:
+1. ✅ CI dependency issues fixed
+2. ✅ All CLI integrations implemented (Stories 1-5)
+3. ✅ Business days flag added
+4. ✅ Documentation updated
+5. 🔄 Ready for final testing and merge
