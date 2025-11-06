@@ -29,7 +29,8 @@ def export_rows_csv(
     for row in rows:
         writer.writerow(row)
     if file is None:
-        assert isinstance(output, StringIO)
+        if not isinstance(output, StringIO):
+            raise TypeError("Expected StringIO when file is None")
         return output.getvalue()
     return None
 
@@ -55,7 +56,8 @@ def export_cycle_time_csv(
     for row in rows:
         writer.writerow(row)
     if file is None:
-        assert isinstance(output, StringIO)
+        if not isinstance(output, StringIO):
+            raise TypeError("Expected StringIO when file is None")
         return output.getvalue()
     return None
 
