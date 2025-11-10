@@ -131,9 +131,9 @@ def parse_workflow_file(file: Union[str, TextIO]) -> WorkflowConfig:
         raise ValueError("Missing <Implementation> marker in workflow config")
 
     # Validate state references
-    all_groups = set(status_groups.keys())
+    all_group_names: List[str] = list(status_groups.keys())
     for state in (initial_state, final_state, implementation_state):
-        if state not in all_groups:
+        if state not in all_group_names:
             raise ValueError(f"State marker '{state}' references undefined state group")
 
     return WorkflowConfig(

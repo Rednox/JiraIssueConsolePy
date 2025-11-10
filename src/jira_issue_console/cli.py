@@ -6,12 +6,12 @@ This uses only the standard library so the scaffold can run without extra depend
 import argparse
 import asyncio
 import csv
-from typing import Optional, List
+from typing import Optional, List, Any
 
 try:
     import click
 except Exception:
-    click = None
+    click: Any = None  # type: ignore
 
 from .core import issues
 from .core.csv_export import export_cycle_time_csv
@@ -161,7 +161,7 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         with open(args.status_timing, "w", encoding="utf-8", newline="") as f:
             if rows:
                 # Get all unique status names from all rows
-                all_statuses = set()
+                all_statuses: set[str] = set()
                 for row in rows:
                     all_statuses.update(k for k in row.keys() if k != "key")
                 fieldnames = ["key"] + sorted(all_statuses)
@@ -246,7 +246,7 @@ if click is not None:
         status_timing_file: Optional[str],
         transitions_file: Optional[str],
         business_days: bool,
-    ):
+    ) -> int:
         """Compatibility Click command used by tests (runner.invoke(app, args))."""
         argv: List[str] = [project]
         if csv_file:
@@ -268,7 +268,7 @@ if click is not None:
         rc = asyncio.run(async_main(argv))
         if rc:
             raise SystemExit(rc)
-        return rc
+        return rc or 0
 else:
     # Provide a minimal placeholder so imports don't fail in environments without click
-    app = None
+    app: Any = None  # type: ignore

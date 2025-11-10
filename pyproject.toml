@@ -44,3 +44,7 @@ ignore_missing_imports = false
 module = ["tests.*"]
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
+
+[[tool.mypy.overrides]]
+module = ["httpx", "respx"]
+ignore_missing_imports = true
