@@ -2,7 +2,6 @@
 
 import io
 import csv
-from typing import Dict, List, Any
 
 from jira_issue_console.core.csv_export import (
     export_rows_csv,

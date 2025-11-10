@@ -2,7 +2,6 @@ import os
 import base64
 import respx
 import pytest
-import httpx
 
 from jira_issue_console import jira_client
 
@@ -20,7 +19,7 @@ async def test_fetch_issues_sets_basic_auth():
     route = respx.get(url).respond(200, json=payload)
 
     # Act
-    res = await jira_client.fetch_issues("PROJ")
+    _res = await jira_client.fetch_issues("PROJ")
 
     # Assert: request was made and Authorization header exists and is Basic
     assert route.calls, "No HTTP call was recorded"
@@ -48,7 +47,7 @@ async def test_fetch_issues_sets_bearer_auth():
     route = respx.get(url).respond(200, json=payload)
 
     # Act
-    res = await jira_client.fetch_issues("PROJ")
+    _res = await jira_client.fetch_issues("PROJ")
 
     # Assert
     assert route.calls, "No HTTP call was recorded"

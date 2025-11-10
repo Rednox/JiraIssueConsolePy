@@ -1,7 +1,6 @@
 """Test issue status mapping and transition tracking."""
 import pytest
 from datetime import datetime, timezone
-from typing import List, Dict, Any
 
 from jira_issue_console.core.workflow_config import WorkflowConfig
 from jira_issue_console.core.issues import (

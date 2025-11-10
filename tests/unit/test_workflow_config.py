@@ -1,7 +1,6 @@
 """Test workflow configuration parsing and management."""
 import textwrap
 from io import StringIO
-from datetime import date
 
 import pytest
 

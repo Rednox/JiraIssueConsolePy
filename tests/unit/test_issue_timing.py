@@ -1,7 +1,7 @@
 """Tests for issue timing calculations."""
 
-from datetime import datetime, date, timezone, timedelta
-from typing import Dict, List, Any
+from datetime import datetime, timezone
+from typing import Dict, List
 
 import pytest
 

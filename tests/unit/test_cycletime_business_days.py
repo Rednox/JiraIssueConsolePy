@@ -1,6 +1,6 @@
 """Test business days cycle time calculations."""
 import pytest
-from datetime import datetime, timezone, date
+from datetime import date
 from jira_issue_console.core.cycletime import compute_cycle_time_days, export_cycle_time_rows
 from jira_issue_console.config import Config
 

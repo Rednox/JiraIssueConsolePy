@@ -1,10 +1,6 @@
 """Tests for JSON file input support with security checks."""
 
 import json
-import os
-import stat
-import tempfile
-from pathlib import Path
 import pytest
 
 from jira_issue_console.core.json_input import load_issues_from_json

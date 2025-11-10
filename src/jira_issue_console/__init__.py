@@ -14,6 +14,6 @@ try:
 	from httpx import Response
 	if hasattr(respx, "router"):
 		setattr(respx.router.MockRouter, "Response", Response)
-except Exception:
-	# Not critical if respx is unavailable in the environment
+except (ImportError, AttributeError):
+	# Not critical if respx is unavailable in the environment or structure differs
 	pass

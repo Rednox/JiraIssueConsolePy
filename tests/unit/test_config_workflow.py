@@ -1,8 +1,4 @@
 """Test config loading including workflow configuration."""
-import os
-import tempfile
-from datetime import date
-import pytest
 
 from jira_issue_console.config import Config, from_env
 

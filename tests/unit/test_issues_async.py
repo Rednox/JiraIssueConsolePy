@@ -1,7 +1,5 @@
 import pytest
 import respx
-import httpx
-import asyncio
 
 from jira_issue_console.core import issues
 
