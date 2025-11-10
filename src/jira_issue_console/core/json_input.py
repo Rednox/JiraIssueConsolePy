@@ -5,20 +5,18 @@ import os
 import stat
 from pathlib import Path
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
-from ..models.workflow_config import WorkflowConfig
-from . import issues
 
 logger = logging.getLogger(__name__)
 
 
 def _check_file_permissions(path: Path) -> bool:
     """Check if file permissions are secure (only owner can read).
-    
+
     Args:
         path: Path to the file to check
-        
+
     Returns:
         True if permissions are secure, False otherwise
     """
@@ -29,7 +27,8 @@ def _check_file_permissions(path: Path) -> bool:
             logger.warning(
                 "Warning: JSON input file %s has loose permissions. "
                 "Consider restricting with: chmod 600 %s",
-                path, path
+                path,
+                path,
             )
             return False
         return True
@@ -39,16 +38,16 @@ def _check_file_permissions(path: Path) -> bool:
 
 def load_issues_from_json(file_path: str) -> List[Dict[str, Any]]:
     """Load Jira issues from a JSON export file.
-    
+
     SECURITY WARNING: Ensure exported JSON files don't contain sensitive data
     and have appropriate file permissions (readable only by owner).
-    
+
     Args:
         file_path: Path to the JSON file containing issue data
-        
+
     Returns:
         List of issue dicts matching Jira REST API format
-        
+
     Raises:
         FileNotFoundError: If file does not exist
         ValueError: If JSON format is invalid or file permissions are insecure
@@ -57,20 +56,20 @@ def load_issues_from_json(file_path: str) -> List[Dict[str, Any]]:
     path = Path(file_path).resolve()
     if not path.exists():
         raise FileNotFoundError(f"JSON file not found: {file_path}")
-        
+
     # Security checks
     if not path.is_file():
         raise ValueError(f"Path {file_path} is not a regular file")
-    
+
     # Check permissions
     _check_file_permissions(path)
-    
+
     try:
         with open(path) as f:
             data = json.load(f)
     except json.JSONDecodeError as e:
         raise ValueError(f"Malformed JSON in {file_path}: {str(e)}")
-        
+
     # Support both flat issue list and structured export formats
     if isinstance(data, list):
         issues = data
@@ -86,22 +85,22 @@ def load_issues_from_json(file_path: str) -> List[Dict[str, Any]]:
                 raise ValueError("missing required fields")
     else:
         raise ValueError(
-            f"Invalid JSON format - expected list or dict with Jira issue structure"
+            "Invalid JSON format - expected list or dict with Jira issue structure"
         )
 
     # Validate and sanitize basic issue fields
     required_fields = {"key", "fields"}
-    
+
     for issue in issues:
         if not isinstance(issue, dict):
             raise ValueError(f"Invalid issue format - expected dict, got {type(issue)}")
-        
+
         missing = required_fields - set(issue.keys())
         if missing:
             raise ValueError("missing required fields")
-            
+
         # Ensure fields is a dict
         if not isinstance(issue.get("fields"), dict):
             raise ValueError("Issue fields must be a dict")
-            
+
     return issues

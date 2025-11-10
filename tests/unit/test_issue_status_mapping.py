@@ -1,4 +1,5 @@
 """Test issue status mapping and transition tracking."""
+
 import pytest
 from datetime import datetime, timezone
 
@@ -43,33 +44,53 @@ def mock_issue():
             "created": "2025-11-01T10:00:00.000+0000",
             "summary": "Test issue",
             "status": {"name": "In Development"},
-            "resolutiondate": "2025-11-04T16:00:00.000+0000"
+            "resolutiondate": "2025-11-04T16:00:00.000+0000",
         },
         "changelog": {
             "histories": [
                 {
                     "created": "2025-11-01T12:00:00.000+0000",
-                    "items": [{"field": "status", "fromString": "Open", "toString": "Analysis"}]
+                    "items": [
+                        {
+                            "field": "status",
+                            "fromString": "Open",
+                            "toString": "Analysis",
+                        }
+                    ],
                 },
                 {
                     "created": "2025-11-02T10:00:00.000+0000",
-                    "items": [{"field": "status", "fromString": "Analysis", "toString": "In Development"}]
+                    "items": [
+                        {
+                            "field": "status",
+                            "fromString": "Analysis",
+                            "toString": "In Development",
+                        }
+                    ],
                 },
                 {
                     "created": "2025-11-04T16:00:00.000+0000",
-                    "items": [{"field": "status", "fromString": "In Development", "toString": "Closed"}]
-                }
+                    "items": [
+                        {
+                            "field": "status",
+                            "fromString": "In Development",
+                            "toString": "Closed",
+                        }
+                    ],
+                },
             ]
-        }
+        },
     }
 
 
-@pytest.mark.skip(reason="Async test setup incomplete - needs pytest-asyncio configuration")
+@pytest.mark.skip(
+    reason="Async test setup incomplete - needs pytest-asyncio configuration"
+)
 @pytest.mark.asyncio
 async def test_list_issue_transitions_with_workflow():
     """Test that transitions are properly mapped to workflow groups."""
     transitions = await list_issue_transitions("TEST-1", workflow_config)
-    
+
     assert transitions[0]["status"] == "Funnel"  # Initial status mapped to group
     assert transitions[1]["status"] == "Analysis"
     assert transitions[2]["status"] == "In Progress"  # "In Development" mapped to group
@@ -80,21 +101,29 @@ def test_normalize_status(workflow_config):
     """Test status normalization through workflow groups."""
     assert normalize_status("Open", workflow_config) == "Funnel"
     assert normalize_status("In Development", workflow_config) == "In Progress"
-    assert normalize_status("Unknown", workflow_config) == "Unknown"  # Unmapped stays as-is
+    assert (
+        normalize_status("Unknown", workflow_config) == "Unknown"
+    )  # Unmapped stays as-is
 
 
 def test_group_transitions_by_day(mock_issue, workflow_config):
     """Test grouping transitions into daily buckets."""
     transitions = [
         {"status": "Funnel", "date": datetime(2025, 11, 1, 10, 0, tzinfo=timezone.utc)},
-        {"status": "Analysis", "date": datetime(2025, 11, 1, 12, 0, tzinfo=timezone.utc)},
-        {"status": "In Progress", "date": datetime(2025, 11, 2, 10, 0, tzinfo=timezone.utc)},
+        {
+            "status": "Analysis",
+            "date": datetime(2025, 11, 1, 12, 0, tzinfo=timezone.utc),
+        },
+        {
+            "status": "In Progress",
+            "date": datetime(2025, 11, 2, 10, 0, tzinfo=timezone.utc),
+        },
         {"status": "Done", "date": datetime(2025, 11, 4, 16, 0, tzinfo=timezone.utc)},
     ]
 
     daily = group_transitions_by_day(transitions)
     assert len(daily) == 3  # Nov 1, 2, 4 (only days with actual transitions)
-    
+
     # Check Nov 1 transitions
     nov1 = daily[datetime(2025, 11, 1).date()]
     assert len(nov1) == 2

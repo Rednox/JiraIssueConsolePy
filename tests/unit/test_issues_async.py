@@ -9,7 +9,9 @@ from jira_issue_console.core import issues
 async def test_list_issues_respx():
     # Arrange: mock Jira search endpoint
     url = "https://jira.example.com/rest/api/2/search"
-    payload = {"issues": [{"id": "1", "key": "PROJ-1", "fields": {"summary": "First issue"}}]}
+    payload = {
+        "issues": [{"id": "1", "key": "PROJ-1", "fields": {"summary": "First issue"}}]
+    }
     respx.get(url).respond(200, json=payload)
 
     # Act

@@ -2,7 +2,6 @@
 
 import csv
 from pathlib import Path
-import pytest
 from pytest_bdd import given, when, then, scenarios, parsers
 
 from jira_issue_console.cli import app
@@ -37,18 +36,25 @@ def mock_jira_project(respx_mock):
                                 "histories": [
                                     {
                                         "created": "2023-01-02T14:00:00.000+0000",
-                                        "items": [{"field": "status", "toString": "In Progress"}]
+                                        "items": [
+                                            {
+                                                "field": "status",
+                                                "toString": "In Progress",
+                                            }
+                                        ],
                                     },
                                     {
                                         "created": "2023-01-03T16:00:00.000+0000",
-                                        "items": [{"field": "status", "toString": "Done"}]
-                                    }
+                                        "items": [
+                                            {"field": "status", "toString": "Done"}
+                                        ],
+                                    },
                                 ]
-                            }
-                        }
+                            },
+                        },
                     }
                 ]
-            }
+            },
         )
     )
 

@@ -1,7 +1,7 @@
 """Test CLI JQL filtering functionality."""
+
 import pytest
-from pytest_bdd import scenario, given, when, then, parsers
-import respx
+from pytest_bdd import scenario, given, when, then
 
 from jira_issue_console.cli import main
 
@@ -12,16 +12,16 @@ def mock_high_priority_issues(mocker):
     return [
         {
             "key": "TEST-1",
-            "id": "1", 
+            "id": "1",
             "summary": "High priority issue 1",
-            "priority": "High"
+            "priority": "High",
         },
         {
-            "key": "TEST-2", 
+            "key": "TEST-2",
             "id": "2",
             "summary": "High priority issue 2",
-            "priority": "High"
-        }
+            "priority": "High",
+        },
     ]
 
 
@@ -34,12 +34,15 @@ def test_jql_filter():
 @given('a project "TEST" with high priority issues')
 def project_with_high_priority_issues(mocker, mock_high_priority_issues):
     """Set up mock issues for the project."""
+
     async def mock_list_issues(project_key: str, jql: str = None):
         assert project_key == "TEST"
         assert "priority = High" in jql
         return mock_high_priority_issues
 
-    mocker.patch("jira_issue_console.core.issues.list_issues", side_effect=mock_list_issues)
+    mocker.patch(
+        "jira_issue_console.core.issues.list_issues", side_effect=mock_list_issues
+    )
 
 
 @when('I run the CLI with project "TEST" and JQL filter "priority = High"')

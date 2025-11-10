@@ -2,11 +2,11 @@
 
 This uses only the standard library so the scaffold can run without extra dependencies.
 """
+
 import argparse
 import asyncio
 import csv
 from typing import Optional, List
-import sys
 
 try:
     import click
@@ -27,22 +27,39 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="jira-issue-console")
     p.add_argument("project", help="Jira project key to list issues for")
     p.add_argument("--csv", metavar="CSV_FILE", help="Export cycle times to CSV file")
-    p.add_argument("--cfd", metavar="CSV_FILE", help="Export CFD (Cumulative Flow Diagram) data to CSV file")
-    p.add_argument("--jql", help="Custom JQL query (e.g. 'priority = High AND status = Open')")
-    p.add_argument("--input", metavar="JSON_FILE", help="JSON input file (offline mode)")
+    p.add_argument(
+        "--cfd",
+        metavar="CSV_FILE",
+        help="Export CFD (Cumulative Flow Diagram) data to CSV file",
+    )
+    p.add_argument(
+        "--jql", help="Custom JQL query (e.g. 'priority = High AND status = Open')"
+    )
+    p.add_argument(
+        "--input", metavar="JSON_FILE", help="JSON input file (offline mode)"
+    )
     p.add_argument("--workflow", metavar="WORKFLOW_FILE", help="Workflow mapping file")
-    p.add_argument("--status-timing", metavar="CSV_FILE", help="Export status timing to CSV")
-    p.add_argument("--transitions", metavar="CSV_FILE", help="Export transitions to CSV")
-    p.add_argument("--business-days", action="store_true", help="Use business days (exclude weekends) for time calculations")
+    p.add_argument(
+        "--status-timing", metavar="CSV_FILE", help="Export status timing to CSV"
+    )
+    p.add_argument(
+        "--transitions", metavar="CSV_FILE", help="Export transitions to CSV"
+    )
+    p.add_argument(
+        "--business-days",
+        action="store_true",
+        help="Use business days (exclude weekends) for time calculations",
+    )
     return p
 
 
 async def async_main(argv: Optional[List[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
-    
+
     # Create config object for business days calculations
     from .config import Config
+
     config = None
     if args.business_days:
         config = Config(
@@ -50,14 +67,14 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
             jira_user=None,
             jira_api_token=None,
             use_business_days=True,
-            holidays=set()
+            holidays=set(),
         )
-    
+
     # Load workflow config if provided
     workflow = None
     if args.workflow:
         workflow = load_workflow_config(args.workflow)
-    
+
     # Load issues from JSON file (offline mode) or from Jira API
     if args.input:
         # Offline mode: load from JSON file
@@ -69,6 +86,7 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         if args.csv or args.cfd or args.status_timing or args.transitions:
             # Need full issue data for exports - fetch with expand=changelog
             from . import jira_client
+
             if getattr(args, "jql", None):
                 raw_issues = await jira_client.fetch_issues(args.project, jql=args.jql)
             else:
@@ -83,10 +101,10 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
             header_key = "KEY"
             header_summary = "SUMMARY"
             print(f"{header_key:<16} {header_summary}")
-            print(f"{'-'*16} {'-'*40}")
+            print(f"{'-' * 16} {'-' * 40}")
             for it in items:
-                key = it.get('key', '')
-                summary = it.get('summary', '') or ''
+                key = it.get("key", "")
+                summary = it.get("summary", "") or ""
                 print(f"{key:<16} {summary}")
             return 0
 
@@ -103,11 +121,24 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
     # Export CFD data if requested
     if args.cfd:
         # Prepare issues with transitions for CFD calculation
-        issues_with_transitions = prepare_issues_with_transitions(raw_issues, workflow=None)
+        issues_with_transitions = prepare_issues_with_transitions(
+            raw_issues, workflow=None
+        )
         cfd_data = calculate_cfd_data(issues_with_transitions, workflow=workflow)
         rows = export_cfd_rows(cfd_data)
         with open(args.cfd, "w", encoding="utf-8", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=["Date"] + sorted(set(status for row in rows for status in row.keys() if status != "Date")))
+            writer = csv.DictWriter(
+                f,
+                fieldnames=["Date"]
+                + sorted(
+                    set(
+                        status
+                        for row in rows
+                        for status in row.keys()
+                        if status != "Date"
+                    )
+                ),
+            )
             writer.writeheader()
             writer.writerows(rows)
         print(f"Exported CFD data to {args.cfd}")
@@ -116,14 +147,16 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
     # Export status timing if requested
     if args.status_timing:
         # Prepare issues with transitions for timing calculation
-        issues_with_transitions = prepare_issues_with_transitions(raw_issues, workflow=None)
+        issues_with_transitions = prepare_issues_with_transitions(
+            raw_issues, workflow=None
+        )
         use_business_days = config.use_business_days if config else False
         holidays = config.holidays if config else set()
         rows = export_status_timing_rows(
-            issues_with_transitions, 
+            issues_with_transitions,
             workflow=workflow,
             use_business_days=use_business_days,
-            holidays=holidays
+            holidays=holidays,
         )
         with open(args.status_timing, "w", encoding="utf-8", newline="") as f:
             if rows:
@@ -141,7 +174,9 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
     # Export transitions if requested
     if args.transitions:
         # Prepare issues with transitions for export
-        issues_with_transitions = prepare_issues_with_transitions(raw_issues, workflow=None)
+        issues_with_transitions = prepare_issues_with_transitions(
+            raw_issues, workflow=None
+        )
         rows = export_transitions_rows(issues_with_transitions, workflow=workflow)
         with open(args.transitions, "w", encoding="utf-8", newline="") as f:
             fieldnames = ["key", "from_status", "to_status", "date"]
@@ -155,11 +190,11 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
     header_key = "KEY"
     header_summary = "SUMMARY"
     print(f"{header_key:<16} {header_summary}")
-    print(f"{'-'*16} {'-'*40}")
+    print(f"{'-' * 16} {'-' * 40}")
     for it in raw_issues:
-        key = it.get('key', '')
-        fields = it.get('fields', {})
-        summary = fields.get('summary', '') or ''
+        key = it.get("key", "")
+        fields = it.get("fields", {})
+        summary = fields.get("summary", "") or ""
         print(f"{key:<16} {summary}")
     return 0
 
@@ -179,16 +214,28 @@ def main(argv: Optional[List[str]] = None) -> int:
 
 
 if click is not None:
+
     @click.command()
     @click.argument("project")
     @click.option("--csv", "csv_file", help="Export cycle times to CSV file")
-    @click.option("--cfd", "cfd_file", help="Export CFD (Cumulative Flow Diagram) data to CSV file")
+    @click.option(
+        "--cfd",
+        "cfd_file",
+        help="Export CFD (Cumulative Flow Diagram) data to CSV file",
+    )
     @click.option("--jql", "jql", help="Custom JQL query")
     @click.option("--input", "input_file", help="JSON input file (offline mode)")
     @click.option("--workflow", "workflow_file", help="Workflow mapping file")
-    @click.option("--status-timing", "status_timing_file", help="Export status timing to CSV")
+    @click.option(
+        "--status-timing", "status_timing_file", help="Export status timing to CSV"
+    )
     @click.option("--transitions", "transitions_file", help="Export transitions to CSV")
-    @click.option("--business-days", "business_days", is_flag=True, help="Use business days for time calculations")
+    @click.option(
+        "--business-days",
+        "business_days",
+        is_flag=True,
+        help="Use business days for time calculations",
+    )
     def app(
         project: str,
         csv_file: Optional[str],
@@ -198,7 +245,7 @@ if click is not None:
         workflow_file: Optional[str],
         status_timing_file: Optional[str],
         transitions_file: Optional[str],
-        business_days: bool
+        business_days: bool,
     ):
         """Compatibility Click command used by tests (runner.invoke(app, args))."""
         argv: List[str] = [project]

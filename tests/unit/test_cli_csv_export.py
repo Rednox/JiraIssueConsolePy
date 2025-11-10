@@ -1,6 +1,3 @@
-import asyncio
-from pathlib import Path
-
 import pytest
 
 from jira_issue_console import cli

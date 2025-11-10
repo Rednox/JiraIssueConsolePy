@@ -1,7 +1,8 @@
 """Test configuration handling."""
+
 from datetime import date
 import os
-from jira_issue_console.config import from_env, Config
+from jira_issue_console.config import from_env
 
 
 def test_config_defaults():
@@ -37,7 +38,7 @@ def test_config_use_business_days():
         ("0", False),
         ("no", False),
     ]
-    
+
     for value, expected in test_cases:
         os.environ["JIRA_USE_BUSINESS_DAYS"] = value
         config = from_env()
@@ -52,7 +53,7 @@ def test_invalid_holidays():
         '{"not": "an-array"}',
         "[42]",
     ]
-    
+
     for value in test_cases:
         os.environ["JIRA_HOLIDAYS"] = value
         config = from_env()

@@ -38,7 +38,10 @@ def test_export_cycle_times_rows():
         {
             "id": "1",
             "key": "PROJ-1",
-            "fields": {"created": "2025-10-01T00:00:00.000+0000", "resolutiondate": "2025-10-04T00:00:00.000+0000"},
+            "fields": {
+                "created": "2025-10-01T00:00:00.000+0000",
+                "resolutiondate": "2025-10-04T00:00:00.000+0000",
+            },
         },
         {
             "id": "2",

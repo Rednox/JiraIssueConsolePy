@@ -1,8 +1,9 @@
 """Test CLI CFD export functionality."""
+
 import csv
 import os
 import tempfile
-from datetime import datetime, date
+from datetime import datetime
 from typing import List, Dict, Any
 
 import pytest
@@ -20,35 +21,35 @@ def mock_issues(mocker) -> List[Dict[str, Any]]:
             "transitions": [
                 {
                     "status": "Open",
-                    "date": datetime.fromisoformat("2025-11-01T10:00:00+00:00")
+                    "date": datetime.fromisoformat("2025-11-01T10:00:00+00:00"),
                 },
                 {
                     "status": "In Progress",
-                    "date": datetime.fromisoformat("2025-11-02T14:00:00+00:00")
+                    "date": datetime.fromisoformat("2025-11-02T14:00:00+00:00"),
                 },
                 {
                     "status": "Done",
-                    "date": datetime.fromisoformat("2025-11-04T16:00:00+00:00")
-                }
-            ]
+                    "date": datetime.fromisoformat("2025-11-04T16:00:00+00:00"),
+                },
+            ],
         },
         {
             "key": "TEST-2",
             "transitions": [
                 {
                     "status": "Open",
-                    "date": datetime.fromisoformat("2025-11-02T09:00:00+00:00")
+                    "date": datetime.fromisoformat("2025-11-02T09:00:00+00:00"),
                 },
                 {
                     "status": "In Progress",
-                    "date": datetime.fromisoformat("2025-11-02T15:00:00+00:00")
+                    "date": datetime.fromisoformat("2025-11-02T15:00:00+00:00"),
                 },
                 {
                     "status": "Done",
-                    "date": datetime.fromisoformat("2025-11-05T11:00:00+00:00")
-                }
-            ]
-        }
+                    "date": datetime.fromisoformat("2025-11-05T11:00:00+00:00"),
+                },
+            ],
+        },
     ]
 
 
@@ -70,14 +71,21 @@ def test_export_cfd():
 @given(parsers.parse('a project "{project}" with issues and transitions'))
 def project_with_transitions(mocker, mock_issues, project: str):
     """Set up mock issues with transitions for the project."""
+
     async def mock_list_issues(project_key: str):
         assert project_key == project
         return mock_issues
 
-    mocker.patch("jira_issue_console.core.issues.list_issues", side_effect=mock_list_issues)
+    mocker.patch(
+        "jira_issue_console.core.issues.list_issues", side_effect=mock_list_issues
+    )
 
 
-@when(parsers.parse('I run the CLI with project "{project}" and CFD export to "{csv_path}"'))
+@when(
+    parsers.parse(
+        'I run the CLI with project "{project}" and CFD export to "{csv_path}"'
+    )
+)
 def run_cli_with_cfd(project: str, csv_file):
     """Run the CLI with CFD export argument."""
     args = [project, "--cfd", csv_file]
@@ -105,7 +113,7 @@ def verify_cfd_output(csv_file: str):
     assert int(rows[0]["Done"]) == 0
 
     # Nov 2: 2 In Progress (both moved there)
-    assert rows[1]["Date"] == "2025-11-02" 
+    assert rows[1]["Date"] == "2025-11-02"
     assert int(rows[1]["Open"]) == 0
     assert int(rows[1]["In Progress"]) == 2
     assert int(rows[1]["Done"]) == 0

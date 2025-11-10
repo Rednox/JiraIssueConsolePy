@@ -1,4 +1,5 @@
 """Test workflow configuration parsing and management."""
+
 import textwrap
 from io import StringIO
 
@@ -7,7 +8,7 @@ import pytest
 from jira_issue_console.core.workflow_config import (
     WorkflowConfig,
     load_workflow_config,
-    parse_workflow_file
+    parse_workflow_file,
 )
 
 
@@ -55,14 +56,16 @@ def test_parse_workflow_file_with_whitespace():
 def test_load_workflow_config(tmp_path):
     """Test loading workflow config from a file."""
     workflow_file = tmp_path / "workflow.txt"
-    workflow_file.write_text(textwrap.dedent("""
+    workflow_file.write_text(
+        textwrap.dedent("""
         Funnel:Open
         In Progress
         Done:Closed
         <First>Funnel
         <Last>Done
         <Implementation>In Progress
-    """).strip())
+    """).strip()
+    )
 
     config = load_workflow_config(str(workflow_file))
     assert config.status_groups["Funnel"] == ["Open"]
@@ -80,6 +83,7 @@ def test_missing_required_markers():
 
     with pytest.raises(ValueError, match="Missing <Last> marker"):
         parse_workflow_file(StringIO(content))
+
 
 def test_invalid_state_reference():
     """Test that referencing undefined states raises ValueError."""

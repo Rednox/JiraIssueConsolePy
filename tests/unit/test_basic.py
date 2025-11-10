@@ -3,6 +3,7 @@
 This test uses asyncio.run to exercise the async `list_issues` function so it works
 in both local and CI environments without introducing pytest-asyncio here.
 """
+
 import unittest
 import asyncio
 

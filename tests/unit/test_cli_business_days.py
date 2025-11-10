@@ -1,6 +1,4 @@
 """Test CLI with --business-days flag."""
-import asyncio
-from pathlib import Path
 
 import pytest
 
@@ -37,7 +35,7 @@ async def test_cli_business_days_flag(tmp_path, monkeypatch):
     # Assert: file exists and cycle time is in business days (2 days, not 3.25)
     assert out_file.exists()
     text = out_file.read_text(encoding="utf-8").strip()
-    
+
     # Should contain 2.0 for business days (Monday + Tuesday)
     assert "2.0" in text or "2," in text
     assert "TEST-1" in text
@@ -72,7 +70,7 @@ async def test_cli_without_business_days_flag(tmp_path, monkeypatch):
     # Assert: file exists and cycle time is in calendar days (~3.25 days)
     assert out_file.exists()
     text = out_file.read_text(encoding="utf-8").strip()
-    
+
     # Should contain approximately 3.25 days (Saturday 10am to Tuesday 4pm)
     assert "3.2" in text or "3.3" in text  # Allow some tolerance
     assert "TEST-1" in text

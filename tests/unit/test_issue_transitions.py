@@ -3,6 +3,7 @@
 These tests ensure we correctly track when issues move between statuses,
 which is essential for cycle time calculations.
 """
+
 import pytest
 from datetime import datetime, timezone
 
@@ -28,9 +29,9 @@ async def test_list_issue_transitions(respx_mock):
                         {
                             "field": "status",
                             "fromString": "To Do",
-                            "toString": "In Progress"
+                            "toString": "In Progress",
                         }
-                    ]
+                    ],
                 },
                 {
                     "created": "2025-10-03T16:00:00.000+0000",
@@ -38,12 +39,12 @@ async def test_list_issue_transitions(respx_mock):
                         {
                             "field": "status",
                             "fromString": "In Progress",
-                            "toString": "Done"
+                            "toString": "Done",
                         }
-                    ]
-                }
+                    ],
+                },
             ]
-        }
+        },
     }
 
     # Mock the Jira API response
@@ -58,9 +59,9 @@ async def test_list_issue_transitions(respx_mock):
     assert len(result) == 3  # created + 2 transitions
     assert result[0]["status"] == "To Do"  # initial status
     assert result[0]["date"] == datetime(2025, 10, 1, 10, 0, tzinfo=timezone.utc)
-    
+
     assert result[1]["status"] == "In Progress"
     assert result[1]["date"] == datetime(2025, 10, 1, 14, 0, tzinfo=timezone.utc)
-    
+
     assert result[2]["status"] == "Done"
     assert result[2]["date"] == datetime(2025, 10, 3, 16, 0, tzinfo=timezone.utc)
