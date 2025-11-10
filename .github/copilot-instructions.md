@@ -104,6 +104,9 @@ DevOps recommendations
 - CI: GitHub Actions matrix for Python versions (3.10, 3.11), run lint/type/tests.
 - Add codecov/coverage reporting.
 - Enforce branch protection rules that require CI green before merging.
+- **Always validate CI checks before pushing to a PR**: Run `ruff check`, `ruff format --check`, 
+  `mypy src`, and `bandit` locally to ensure all quality checks pass before pushing changes.
+  This prevents wasting CI resources and ensures high-quality code submissions.
 
 When to ask maintainers
 - If a C# behavior is ambiguous, request the specific C# file/line or a sample CLI session
