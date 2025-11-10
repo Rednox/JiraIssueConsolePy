@@ -1,7 +1,5 @@
 """Test CLI with --business-days flag."""
 
-import pytest
-
 from jira_issue_console import cli, jira_client
 
 
