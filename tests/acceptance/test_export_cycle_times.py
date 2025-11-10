@@ -57,12 +57,13 @@ def project_with_issues(mocker, mock_issues, project: str, count: int):
         f"Test expects {count} issues but mock provides {len(mock_issues)}"
     )
 
-    async def mock_list_issues(project_key: str):
+    async def mock_fetch_issues(project_key: str, jql=None):
         assert project_key == project
         return mock_issues
 
+    # Mock jira_client.fetch_issues which is what CLI uses for exports
     mocker.patch(
-        "jira_issue_console.core.issues.list_issues", side_effect=mock_list_issues
+        "jira_issue_console.jira_client.fetch_issues", side_effect=mock_fetch_issues
     )
 
 

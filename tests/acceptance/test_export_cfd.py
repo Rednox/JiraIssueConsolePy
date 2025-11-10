@@ -14,41 +14,69 @@ from jira_issue_console.cli import main
 
 @pytest.fixture
 def mock_issues(mocker) -> List[Dict[str, Any]]:
-    """Return mock issues with transitions for testing."""
+    """Return mock issues in raw Jira format with changelog for testing."""
     return [
         {
             "key": "TEST-1",
-            "transitions": [
-                {
-                    "status": "Open",
-                    "date": datetime.fromisoformat("2025-11-01T10:00:00+00:00"),
-                },
-                {
-                    "status": "In Progress",
-                    "date": datetime.fromisoformat("2025-11-02T14:00:00+00:00"),
-                },
-                {
-                    "status": "Done",
-                    "date": datetime.fromisoformat("2025-11-04T16:00:00+00:00"),
-                },
-            ],
+            "fields": {
+                "created": "2025-11-01T10:00:00.000+0000",
+                "status": {"name": "Done"},
+            },
+            "changelog": {
+                "histories": [
+                    {
+                        "created": "2025-11-02T14:00:00.000+0000",
+                        "items": [
+                            {
+                                "field": "status",
+                                "fromString": "Open",
+                                "toString": "In Progress",
+                            }
+                        ],
+                    },
+                    {
+                        "created": "2025-11-04T16:00:00.000+0000",
+                        "items": [
+                            {
+                                "field": "status",
+                                "fromString": "In Progress",
+                                "toString": "Done",
+                            }
+                        ],
+                    },
+                ]
+            },
         },
         {
             "key": "TEST-2",
-            "transitions": [
-                {
-                    "status": "Open",
-                    "date": datetime.fromisoformat("2025-11-02T09:00:00+00:00"),
-                },
-                {
-                    "status": "In Progress",
-                    "date": datetime.fromisoformat("2025-11-02T15:00:00+00:00"),
-                },
-                {
-                    "status": "Done",
-                    "date": datetime.fromisoformat("2025-11-05T11:00:00+00:00"),
-                },
-            ],
+            "fields": {
+                "created": "2025-11-02T09:00:00.000+0000",
+                "status": {"name": "Done"},
+            },
+            "changelog": {
+                "histories": [
+                    {
+                        "created": "2025-11-02T15:00:00.000+0000",
+                        "items": [
+                            {
+                                "field": "status",
+                                "fromString": "Open",
+                                "toString": "In Progress",
+                            }
+                        ],
+                    },
+                    {
+                        "created": "2025-11-05T11:00:00.000+0000",
+                        "items": [
+                            {
+                                "field": "status",
+                                "fromString": "In Progress",
+                                "toString": "Done",
+                            }
+                        ],
+                    },
+                ]
+            },
         },
     ]
 
@@ -72,12 +100,13 @@ def test_export_cfd():
 def project_with_transitions(mocker, mock_issues, project: str):
     """Set up mock issues with transitions for the project."""
 
-    async def mock_list_issues(project_key: str):
+    async def mock_fetch_issues(project_key: str, jql=None):
         assert project_key == project
         return mock_issues
 
+    # Mock jira_client.fetch_issues which returns raw Jira issues with changelog
     mocker.patch(
-        "jira_issue_console.core.issues.list_issues", side_effect=mock_list_issues
+        "jira_issue_console.jira_client.fetch_issues", side_effect=mock_fetch_issues
     )
 
 

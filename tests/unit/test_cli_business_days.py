@@ -2,11 +2,10 @@
 
 import pytest
 
-from jira_issue_console import cli
+from jira_issue_console import cli, jira_client
 
 
-@pytest.mark.asyncio
-async def test_cli_business_days_flag(tmp_path, monkeypatch):
+def test_cli_business_days_flag(tmp_path, monkeypatch):
     """Test that --business-days flag uses business days for calculations."""
     # Arrange: mock issues spanning a weekend
     # Friday to Tuesday should be 3 calendar days but only 2 business days
@@ -21,10 +20,10 @@ async def test_cli_business_days_flag(tmp_path, monkeypatch):
         },
     ]
 
-    async def fake_list(project_key, jql=None):
+    async def fake_fetch(project_key, jql=None):
         return issues_data
 
-    monkeypatch.setattr(cli.issues, "list_issues", fake_list)
+    monkeypatch.setattr(jira_client, "fetch_issues", fake_fetch)
 
     out_file = tmp_path / "business_days.csv"
 
@@ -41,8 +40,7 @@ async def test_cli_business_days_flag(tmp_path, monkeypatch):
     assert "TEST-1" in text
 
 
-@pytest.mark.asyncio
-async def test_cli_without_business_days_flag(tmp_path, monkeypatch):
+def test_cli_without_business_days_flag(tmp_path, monkeypatch):
     """Test that without --business-days flag, calendar days are used."""
     # Same data as above
     issues_data = [
@@ -56,10 +54,10 @@ async def test_cli_without_business_days_flag(tmp_path, monkeypatch):
         },
     ]
 
-    async def fake_list(project_key, jql=None):
+    async def fake_fetch(project_key, jql=None):
         return issues_data
 
-    monkeypatch.setattr(cli.issues, "list_issues", fake_list)
+    monkeypatch.setattr(jira_client, "fetch_issues", fake_fetch)
 
     out_file = tmp_path / "calendar_days.csv"
 
