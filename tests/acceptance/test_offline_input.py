@@ -1,6 +1,5 @@
 """Tests for offline JSON input feature."""
 
-import json
 import shutil
 from pathlib import Path
 

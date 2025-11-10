@@ -28,3 +28,8 @@ logs/
 
 # Editor backup
 *~
+
+# Local CSV artifacts from manual runs
+cfd.csv
+status_times.csv
+transitions.csv

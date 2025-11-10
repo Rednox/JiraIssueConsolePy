@@ -1,7 +1,7 @@
 """Workflow configuration model."""
 
 from dataclasses import dataclass, field
-from typing import Dict, Optional, Set
+from typing import Dict, Set
 
 
 @dataclass
@@ -12,6 +12,7 @@ class WorkflowConfig:
     codebase and tests. It exposes a `status_map` for direct status->group mapping
     as well as helper methods expected by core logic.
     """
+
     status_map: Dict[str, str] = field(default_factory=dict)
 
     def get_group_for_status(self, status: str) -> str:

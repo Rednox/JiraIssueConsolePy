@@ -1,16 +1,17 @@
 repos:
-  - repo: https://github.com/psf/black
-    rev: 24.3.0
-    hooks:
-      - id: black
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.4.4
     hooks:
       - id: ruff
+        stages: [pre-commit, pre-push]
+      - id: ruff-format
+        stages: [pre-commit, pre-push]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.8.0
     hooks:
       - id: mypy
+        args: ["src", "--show-error-codes"]
+        stages: [pre-push]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
@@ -18,3 +19,17 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest (warnings are errors)
+        entry: python -m pytest -q -W error
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+      - id: smoke-cli
+        name: smoke CLI (offline, no warnings)
+        entry: bash scripts/smoke_cli.sh
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

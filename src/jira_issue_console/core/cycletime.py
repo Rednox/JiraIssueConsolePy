@@ -2,7 +2,8 @@
 
 Functions are pure and accept optional `now` and `config` parameters to keep tests deterministic.
 """
-from typing import Dict, List, Any, Optional, Set
+
+from typing import Dict, List, Any, Optional
 import datetime
 
 from jira_issue_console.config import Config
@@ -18,7 +19,7 @@ def _parse_jira_datetime(s: str) -> datetime.datetime:
 def compute_cycle_time_days(
     issue: Dict[str, Any],
     now: Optional[datetime.datetime] = None,
-    config: Optional[Config] = None
+    config: Optional[Config] = None,
 ) -> float:
     """Compute cycle time in days between `created` and `resolutiondate`.
 
@@ -56,7 +57,9 @@ def compute_cycle_time_days(
             created_date = created
 
         if created_date < resolved_date:
-            if resolved_date.weekday() < 5 and resolved_date not in (config.holidays or set()):
+            if resolved_date.weekday() < 5 and resolved_date not in (
+                config.holidays or set()
+            ):
                 base += 1
 
         return float(base)
@@ -68,7 +71,7 @@ def compute_cycle_time_days(
 def export_cycle_time_rows(
     issues: List[Dict[str, Any]],
     now: Optional[datetime.datetime] = None,
-    config: Optional[Config] = None
+    config: Optional[Config] = None,
 ) -> List[Dict[str, Any]]:
     """Return exportable rows containing key, created, resolved and cycle_time_days."""
     rows: List[Dict[str, Any]] = []
@@ -77,11 +80,13 @@ def export_cycle_time_rows(
         created = fields.get("created")
         resolved = fields.get("resolutiondate")
         ct = compute_cycle_time_days(issue, now=now, config=config)
-        rows.append({
-            "id": issue.get("id"),
-            "key": issue.get("key"),
-            "created": created,
-            "resolved": resolved,
-            "cycle_time_days": ct,
-        })
+        rows.append(
+            {
+                "id": issue.get("id"),
+                "key": issue.get("key"),
+                "created": created,
+                "resolved": resolved,
+                "cycle_time_days": ct,
+            }
+        )
     return rows

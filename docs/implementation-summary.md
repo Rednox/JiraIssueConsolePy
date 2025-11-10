@@ -75,10 +75,19 @@ Done:Closed:Resolved
 **Files Modified:**
 - `src/jira_issue_console/cli.py`: Added transitions export logic
 
-### User Story 5: Business Days Calculation (--business-days) ⏳
-**Status:** Not yet implemented
+### User Story 5: Business Days Calculation (--business-days) ✅
+**Status:** Implemented
 
-This was not included in the first user story implementation as requested. The infrastructure exists in `business_days.py` but the CLI flag needs to be added and wired through to the export functions.
+**Changes Made:**
+- Added `--business-days` flag to argparse and Click CLI parsers
+- Created Config object with `use_business_days=True` when flag is present
+- Wired config through to `export_cycle_time_rows()` and `export_status_timing_rows()`
+- Business days calculations exclude weekends (Saturday, Sunday)
+- Works with all export modes that calculate time durations
+
+**Files Modified:**
+- `src/jira_issue_console/cli.py`: Added flag and config wiring
+- `tests/unit/test_cli_business_days.py`: Added CLI integration tests
 
 ## Key Helper Functions Created
 
@@ -140,25 +149,28 @@ Added optional parameter to `jira_client.fetch_issues()`:
 
 ## Known Limitations
 
-1. **Business Days:** Not yet wired to CLI (User Story 5)
-2. **Workflow Validation:** Simple format uses heuristics for state markers
-3. **Changelog Format:** Assumes standard Jira API structure
+1. **Workflow Validation:** Simple format uses heuristics for state markers
+2. **Changelog Format:** Assumes standard Jira API structure
+3. **Holiday Support:** --business-days currently only excludes weekends; custom holidays require environment variable configuration
 
 ## Testing Recommendations
 
 1. **Unit Tests:** Verify `extract_transitions_from_issue()` with both changelog formats
 2. **Integration Tests:** Test all export modes with both online and offline data
 3. **Acceptance Tests:** Run existing BDD scenarios to ensure compatibility
-4. **Manual Testing:** 
+4. **Business Days Tests:** Test --business-days flag with various date ranges
+5. **Manual Testing:** 
    - Test with real Jira API data
    - Test with various workflow file formats
-   - Test combinations of flags (--input + --workflow + --transitions, etc.)
+   - Test combinations of flags (--input + --workflow + --transitions + --business-days, etc.)
 
-## Next Steps
+## Completion Status
 
-To complete the port:
-1. Implement User Story 5: Add `--business-days` flag
-2. Run full test suite to validate implementations
-3. Update documentation if any issues are found
-4. Consider adding more workflow file format validations
-5. Add CLI examples to README showing new flag combinations
+All 5 user stories have been implemented:
+1. ✅ Offline JSON File Mode (--input)
+2. ✅ Workflow Status Mapping (--workflow)
+3. ✅ Status Timing Export (--status-timing)
+4. ✅ Status Transitions Export (--transitions)
+5. ✅ Business Days Calculation (--business-days)
+
+The Python port now has feature parity with the C# implementation for CLI functionality.

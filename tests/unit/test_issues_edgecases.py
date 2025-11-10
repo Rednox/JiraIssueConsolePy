@@ -23,7 +23,9 @@ async def test_list_issues_handles_missing_fields(monkeypatch):
     async def fake_fetch(project_key, jql=None):
         return raw
 
-    monkeypatch.setattr(issues, "jira_client", type("X", (), {"fetch_issues": fake_fetch}))
+    monkeypatch.setattr(
+        issues, "jira_client", type("X", (), {"fetch_issues": fake_fetch})
+    )
 
     # Act
     res = await issues.list_issues("PROJ")

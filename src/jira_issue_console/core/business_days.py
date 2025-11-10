@@ -1,20 +1,22 @@
 """Business days calculation utilities."""
+
 from datetime import datetime, date
 from typing import Union, Optional, List
+
 
 def compute_business_days(
     start_date: Union[datetime, date],
     end_date: Union[datetime, date],
-    holidays: Optional[Union[List[date], set[date]]] = None
+    holidays: Optional[Union[List[date], set[date]]] = None,
 ) -> int:
     """
     Calculate the number of business days between two dates, excluding weekends and holidays.
-    
+
     Args:
         start_date: The start date/datetime
         end_date: The end date/datetime
         holidays: Optional list of holiday dates to exclude
-        
+
     Returns:
         int: Number of business days between start and end dates (inclusive)
     """

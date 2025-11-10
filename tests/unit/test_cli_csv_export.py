@@ -1,14 +1,8 @@
-import asyncio
-from pathlib import Path
-
-import pytest
-
-from jira_issue_console import cli
+from jira_issue_console import cli, jira_client
 
 
-@pytest.mark.asyncio
-async def test_cli_writes_csv(tmp_path, monkeypatch):
-    # Arrange: mock async issues.list_issues to return two issues
+def test_cli_writes_csv(tmp_path, monkeypatch):
+    # Arrange: mock jira_client.fetch_issues to return two issues
     issues_data = [
         {
             "id": "1",
@@ -25,11 +19,11 @@ async def test_cli_writes_csv(tmp_path, monkeypatch):
         },
     ]
 
-    async def fake_list(project_key, jql=None):
+    async def fake_fetch(project_key, jql=None):
         return issues_data
 
-    # monkeypatch the imported module in cli
-    monkeypatch.setattr(cli.issues, "list_issues", fake_list)
+    # Mock jira_client.fetch_issues which is what CLI uses for CSV export
+    monkeypatch.setattr(jira_client, "fetch_issues", fake_fetch)
 
     out_file = tmp_path / "out.csv"
 

@@ -159,6 +159,31 @@ pip install -r requirements.txt -r dev-requirements.txt
 PYTHONPATH=src pytest
 ```
 
+### Pre-push quality gate
+
+This repo uses pre-commit to enforce a strict pre-push gate that catches issues the CI would otherwise find:
+
+- Ruff (lint + format check)
+- Mypy (type checking)
+- Pytest with warnings treated as errors (`-W error`)
+- A smoke CLI run in offline mode that fails if any warnings/errors/tracebacks appear in the console output
+
+Enable hooks once locally:
+
+```bash
+pip install pre-commit
+pre-commit install --hook-type pre-commit --hook-type pre-push
+```
+
+Run the pre-push checks manually any time:
+
+```bash
+pre-commit run --all-files
+pre-commit run --hook-stage push --all-files
+```
+
+If any check fails, fix it before pushing. Treat a clean console (no warnings) as mandatory, alongside lint/type/tests.
+
 ### VS Code Settings
 
 For VS Code users, the repository includes tasks for running tests, lint, and type checks. The tasks use `python3 -m ...` to ensure tools are run through the Python interpreter.
