@@ -18,7 +18,9 @@ def _dt(s: str) -> datetime:
     return datetime.fromisoformat(s).replace(tzinfo=timezone.utc)
 
 
-def _create_test_issue(key: str, transitions: List[Dict[str, str]], fields: Dict = None) -> Dict:
+def _create_test_issue(
+    key: str, transitions: List[Dict[str, str]], fields: Dict = None
+) -> Dict:
     """Helper to create test issue data."""
     if fields is None:
         fields = {

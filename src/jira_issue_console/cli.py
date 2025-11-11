@@ -181,7 +181,7 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
                     "Implementation Date",
                     "Closed Date",
                 ]
-                
+
                 # Get all unique status columns (excluding fixed and Resolution)
                 all_statuses: set[str] = set()
                 for row in rows:
@@ -190,10 +190,10 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
                         for k in row.keys()
                         if k not in fixed_fields and k != "Resolution"
                     )
-                
+
                 # Build field names: fixed fields + sorted status columns + Resolution
                 fieldnames = fixed_fields + sorted(all_statuses) + ["Resolution"]
-                
+
                 writer = csv.DictWriter(f, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerows(rows)

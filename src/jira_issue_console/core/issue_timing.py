@@ -94,7 +94,7 @@ def export_status_timing_rows(
         holidays: Optional set of holiday dates to exclude
 
     Returns:
-        List of dicts with IssueTimes format (Project, Group, Key, Issuetype, Status, 
+        List of dicts with IssueTimes format (Project, Group, Key, Issuetype, Status,
         Created Date, Component, Category, First Date, Implementation Date, Closed Date,
         status columns in milliseconds, and Resolution)
     """
@@ -175,7 +175,9 @@ def export_status_timing_rows(
                     trans_dt = trans.get("date")
                     if trans_dt:
                         if isinstance(trans_dt, str):
-                            trans_dt = datetime.fromisoformat(trans_dt.replace("Z", "+00:00"))
+                            trans_dt = datetime.fromisoformat(
+                                trans_dt.replace("Z", "+00:00")
+                            )
                         implementation_date = trans_dt.strftime("%d.%m.%Y %H:%M:%S")
                     break
 
@@ -202,13 +204,13 @@ def export_status_timing_rows(
             "Implementation Date": implementation_date,
             "Closed Date": closed_date,
         }
-        
+
         # Add status timing columns (in milliseconds)
         row.update(timing_ms)
-        
+
         # Add Resolution at the end
         row["Resolution"] = resolution
-        
+
         rows.append(row)
 
     return rows
