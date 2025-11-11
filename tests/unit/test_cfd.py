@@ -114,8 +114,8 @@ def test_export_cfd_rows():
     rows = export_cfd_rows(cfd_data)
 
     expected = [
-        {"Date": "2023-01-01", "Done": 0, "In Progress": 1, "Open": 2},
-        {"Date": "2023-01-02", "Done": 1, "In Progress": 2, "Open": 1},
+        {"Day": "01.01.2023", "Done": 0, "In Progress": 1, "Open": 2},
+        {"Day": "02.01.2023", "Done": 1, "In Progress": 2, "Open": 1},
     ]
 
     assert rows == expected
@@ -132,8 +132,8 @@ def test_export_cfd_rows_with_status_list():
     rows = export_cfd_rows(cfd_data, statuses=["In Progress", "Open"])
 
     expected = [
-        {"Date": "2023-01-01", "In Progress": 1, "Open": 2},
-        {"Date": "2023-01-02", "In Progress": 2, "Open": 1},
+        {"Day": "01.01.2023", "In Progress": 1, "Open": 2},
+        {"Day": "02.01.2023", "In Progress": 2, "Open": 1},
     ]
 
     assert rows == expected

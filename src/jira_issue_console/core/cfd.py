@@ -103,7 +103,7 @@ def export_cfd_rows(
                  If not provided, will use all statuses found in data
 
     Returns:
-        List of dicts with 'Date' and status columns
+        List of dicts with 'Day' (DD.MM.YYYY format) and status columns
     """
     if not cfd_data:
         return []
@@ -118,7 +118,8 @@ def export_cfd_rows(
     # Convert to rows
     rows = []
     for day in sorted(cfd_data.keys()):
-        row: Dict[str, Any] = {"Date": day.isoformat()}
+        # Format date as DD.MM.YYYY
+        row: Dict[str, Any] = {"Day": day.strftime("%d.%m.%Y")}
         counts = cfd_data[day]
         for status in statuses:
             # keep numeric counts (ints) for CSV consumers/tests

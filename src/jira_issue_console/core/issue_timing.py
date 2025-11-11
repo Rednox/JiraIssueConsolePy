@@ -124,31 +124,29 @@ def export_transitions_rows(
         workflow: Optional workflow config for status normalization
 
     Returns:
-        List of dicts with issue key, from_status, to_status and date
+        List of dicts with Key, Transition (status), and Timestamp
     """
     rows = []
 
     for issue in issues:
         transitions = issue["transitions"]
 
-        # Add rows for each transition
-        for i in range(len(transitions) - 1):
-            current = transitions[i]
-            next_trans = transitions[i + 1]
-
-            from_status = current["status"]
-            to_status = next_trans["status"]
+        # Add rows for each transition (including the first one as Created)
+        for trans in transitions:
+            status = trans["status"]
 
             if workflow:
-                from_status = normalize_status(from_status, workflow)
-                to_status = normalize_status(to_status, workflow)
+                status = normalize_status(status, workflow)
+
+            # Format timestamp as DD.MM.YYYY HH:MM:SS
+            timestamp = trans["date"]
+            formatted_timestamp = timestamp.strftime("%d.%m.%Y %H:%M:%S")
 
             rows.append(
                 {
-                    "key": issue["key"],
-                    "from_status": from_status,
-                    "to_status": to_status,
-                    "date": next_trans["date"].isoformat(),
+                    "Key": issue["key"],
+                    "Transition": status,
+                    "Timestamp": formatted_timestamp,
                 }
             )
 

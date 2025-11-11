@@ -127,16 +127,19 @@ def test_export_transitions_rows():
 
     rows = export_transitions_rows(issues)
 
-    assert len(rows) == 2  # Two transitions
+    assert len(rows) == 3  # All three transitions
     assert rows[0] == {
-        "key": "TEST-1",
-        "from_status": "Open",
-        "to_status": "In Progress",
-        "date": "2023-01-02T10:00:00+00:00",
+        "Key": "TEST-1",
+        "Transition": "Open",
+        "Timestamp": "01.01.2023 10:00:00",
     }
     assert rows[1] == {
-        "key": "TEST-1",
-        "from_status": "In Progress",
-        "to_status": "Done",
-        "date": "2023-01-03T10:00:00+00:00",
+        "Key": "TEST-1",
+        "Transition": "In Progress",
+        "Timestamp": "02.01.2023 10:00:00",
+    }
+    assert rows[2] == {
+        "Key": "TEST-1",
+        "Transition": "Done",
+        "Timestamp": "03.01.2023 10:00:00",
     }

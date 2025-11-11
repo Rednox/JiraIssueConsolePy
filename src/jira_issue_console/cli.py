@@ -142,13 +142,13 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         with open(cfd_file, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(
                 f,
-                fieldnames=["Date"]
+                fieldnames=["Day"]
                 + sorted(
                     set(
                         status
                         for row in rows
                         for status in row.keys()
-                        if status != "Date"
+                        if status != "Day"
                     )
                 ),
             )
@@ -180,8 +180,8 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         # 3. Export transitions
         rows = export_transitions_rows(issues_with_transitions, workflow=workflow)
         with open(transitions_file, "w", encoding="utf-8", newline="") as f:
-            fieldnames = ["key", "from_status", "to_status", "date"]
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            fieldnames = ["Key", "Transition", "Timestamp"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=";")
             writer.writeheader()
             writer.writerows(rows)
         print(f"Exported transitions to {transitions_file}")
@@ -209,13 +209,13 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         with open(args.cfd, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(
                 f,
-                fieldnames=["Date"]
+                fieldnames=["Day"]
                 + sorted(
                     set(
                         status
                         for row in rows
                         for status in row.keys()
-                        if status != "Date"
+                        if status != "Day"
                     )
                 ),
             )
