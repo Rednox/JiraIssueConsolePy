@@ -117,21 +117,21 @@ def test_output_folder_generates_all_files(mocker, mock_issues, output_dir):
     with open(cfd_file, "r", encoding="utf-8") as f:
         lines = f.readlines()
         assert len(lines) > 1  # Should have header + data rows
-        assert "Date" in lines[0]
+        assert "Day" in lines[0]
 
     # Verify IssueTimes (status timing) file has expected structure
     times_file = os.path.join(output_dir, "TEST_IssueTimes.csv")
     with open(times_file, "r", encoding="utf-8") as f:
         lines = f.readlines()
         assert len(lines) > 1  # Should have header + data rows
-        assert "key" in lines[0]
+        assert "Key" in lines[0]
 
     # Verify Transitions file has expected structure
     transitions_file = os.path.join(output_dir, "TEST_Transitions.csv")
     with open(transitions_file, "r", encoding="utf-8") as f:
         lines = f.readlines()
         assert len(lines) > 1  # Should have header + data rows
-        assert "key,from_status,to_status,date" in lines[0]
+        assert "Key;Transition;Timestamp" in lines[0]
 
 
 def test_output_folder_with_workflow(mocker, mock_issues, output_dir):
