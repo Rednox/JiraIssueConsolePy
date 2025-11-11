@@ -6,6 +6,7 @@ This uses only the standard library so the scaffold can run without extra depend
 import argparse
 import asyncio
 import csv
+import os
 from typing import Optional, List, Any
 
 try:
@@ -46,6 +47,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--transitions", metavar="CSV_FILE", help="Export transitions to CSV"
     )
     p.add_argument(
+        "--output",
+        metavar="OUTPUT_FOLDER",
+        help="Output folder for all exports (generates CFD, IssueTimes, StatusTiming, and Transitions files with project key prefix)",
+    )
+    p.add_argument(
         "--business-days",
         action="store_true",
         help="Use business days (exclude weekends) for time calculations",
@@ -83,7 +89,13 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         # Online mode: fetch from Jira API
         # For display mode, use simplified format
         # For export modes, we need full format with changelog
-        if args.csv or args.cfd or args.status_timing or args.transitions:
+        if (
+            args.csv
+            or args.cfd
+            or args.status_timing
+            or args.transitions
+            or args.output
+        ):
             # Need full issue data for exports - fetch with expand=changelog
             from . import jira_client
 
@@ -107,6 +119,74 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
                 summary = it.get("summary", "") or ""
                 print(f"{key:<16} {summary}")
             return 0
+
+    # Handle --output parameter (generates all export files)
+    if args.output:
+        # Create output directory if it doesn't exist
+        os.makedirs(args.output, exist_ok=True)
+
+        # Prepare issues with transitions (needed for CFD, status timing, and transitions)
+        issues_with_transitions = prepare_issues_with_transitions(
+            raw_issues, workflow=None
+        )
+
+        # Generate filenames with project key prefix
+        project_key = args.project
+        cfd_file = os.path.join(args.output, f"{project_key}_CFD.csv")
+        issue_times_file = os.path.join(args.output, f"{project_key}_IssueTimes.csv")
+        transitions_file = os.path.join(args.output, f"{project_key}_Transitions.csv")
+
+        # 1. Export CFD data
+        cfd_data = calculate_cfd_data(issues_with_transitions, workflow=workflow)
+        rows = export_cfd_rows(cfd_data)
+        with open(cfd_file, "w", encoding="utf-8", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=["Date"]
+                + sorted(
+                    set(
+                        status
+                        for row in rows
+                        for status in row.keys()
+                        if status != "Date"
+                    )
+                ),
+            )
+            writer.writeheader()
+            writer.writerows(rows)
+        print(f"Exported CFD data to {cfd_file}")
+
+        # 2. Export status timing (as IssueTimes.csv)
+        use_business_days = config.use_business_days if config else False
+        holidays = config.holidays if config else set()
+        rows = export_status_timing_rows(
+            issues_with_transitions,
+            workflow=workflow,
+            use_business_days=use_business_days,
+            holidays=holidays,
+        )
+        with open(issue_times_file, "w", encoding="utf-8", newline="") as f:
+            if rows:
+                # Get all unique status names from all rows
+                all_statuses: set[str] = set()
+                for row in rows:
+                    all_statuses.update(k for k in row.keys() if k != "key")
+                fieldnames = ["key"] + sorted(all_statuses)
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(rows)
+        print(f"Exported status timing to {issue_times_file}")
+
+        # 3. Export transitions
+        rows = export_transitions_rows(issues_with_transitions, workflow=workflow)
+        with open(transitions_file, "w", encoding="utf-8", newline="") as f:
+            fieldnames = ["key", "from_status", "to_status", "date"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(rows)
+        print(f"Exported transitions to {transitions_file}")
+
+        return 0
 
     # Export cycle times if requested
     if args.csv:
@@ -161,10 +241,10 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         with open(args.status_timing, "w", encoding="utf-8", newline="") as f:
             if rows:
                 # Get all unique status names from all rows
-                all_statuses: set[str] = set()
+                all_statuses_2: set[str] = set()
                 for row in rows:
-                    all_statuses.update(k for k in row.keys() if k != "key")
-                fieldnames = ["key"] + sorted(all_statuses)
+                    all_statuses_2.update(k for k in row.keys() if k != "key")
+                fieldnames = ["key"] + sorted(all_statuses_2)
                 writer = csv.DictWriter(f, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerows(rows)
@@ -231,6 +311,11 @@ if click is not None:
     )
     @click.option("--transitions", "transitions_file", help="Export transitions to CSV")
     @click.option(
+        "--output",
+        "output_folder",
+        help="Output folder for all exports (generates CFD, IssueTimes, StatusTiming, and Transitions files with project key prefix)",
+    )
+    @click.option(
         "--business-days",
         "business_days",
         is_flag=True,
@@ -245,6 +330,7 @@ if click is not None:
         workflow_file: Optional[str],
         status_timing_file: Optional[str],
         transitions_file: Optional[str],
+        output_folder: Optional[str],
         business_days: bool,
     ) -> int:
         """Compatibility Click command used by tests (runner.invoke(app, args))."""
@@ -263,6 +349,8 @@ if click is not None:
             argv.extend(["--status-timing", status_timing_file])
         if transitions_file:
             argv.extend(["--transitions", transitions_file])
+        if output_folder:
+            argv.extend(["--output", output_folder])
         if business_days:
             argv.append("--business-days")
         rc = asyncio.run(async_main(argv))
