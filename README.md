@@ -25,6 +25,9 @@ python -m jira_issue_console PROJ --cfd cfd.csv  # cumulative flow diagram data
 python -m jira_issue_console PROJ --status-timing status_times.csv  # time in each status
 python -m jira_issue_console PROJ --transitions transitions.csv  # status transition history
 
+# Export all metrics to a folder with project key prefix
+python -m jira_issue_console PROJ --output ./output  # generates PROJ_CFD.csv, PROJ_IssueTimes.csv, PROJ_Transitions.csv
+
 # Use business days for calculations
 python -m jira_issue_console PROJ --business-days --csv cycle_times.csv
 
@@ -120,6 +123,18 @@ Several CSV export formats available:
 - `cfd.csv` - Daily counts for Cumulative Flow Diagram
 - `status_timing.csv` - Time spent in each workflow status
 - `transitions.csv` - Complete status transition history
+
+#### Batch Export with --output
+Use the `--output` parameter to automatically generate all metrics files in a single directory with project key prefix:
+```bash
+python -m jira_issue_console PROJ --output ./output
+```
+This generates:
+- `PROJ_CFD.csv` - Cumulative Flow Diagram data
+- `PROJ_IssueTimes.csv` - Time spent in each workflow status
+- `PROJ_Transitions.csv` - Complete status transition history
+
+The output folder is created automatically if it doesn't exist.
 
 ### Workflow Configuration
 Define custom workflow mappings to normalize status names:
