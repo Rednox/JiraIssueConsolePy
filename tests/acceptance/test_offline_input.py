@@ -69,7 +69,7 @@ def check_cfd_content(tmp_path):
     """Verify CFD CSV content."""
     with open(tmp_path / "cfd.csv") as f:
         content = f.read()
-        assert "Date" in content
+        assert "Day" in content
         assert "Open" in content
         assert "In Progress" in content
         assert "Done" in content

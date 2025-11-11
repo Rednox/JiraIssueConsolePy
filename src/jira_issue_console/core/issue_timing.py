@@ -85,30 +85,132 @@ def export_status_timing_rows(
     use_business_days: bool = False,
     holidays: Optional[Set[date]] = None,
 ) -> List[Dict[str, Any]]:
-    """Generate CSV-ready rows with status timing data.
+    """Generate CSV-ready rows with status timing data in IssueTimes format.
 
     Args:
-        issues: List of issues with transitions
+        issues: List of issues with transitions and fields
         workflow: Optional workflow config for status normalization
         use_business_days: If True, only count business days
         holidays: Optional set of holiday dates to exclude
 
     Returns:
-        List of dicts with issue key and time spent in each status
+        List of dicts with IssueTimes format (Project, Group, Key, Issuetype, Status,
+        Created Date, Component, Category, First Date, Implementation Date, Closed Date,
+        status columns in milliseconds, and Resolution)
     """
     rows = []
     holidays = holidays or set()
 
     for issue in issues:
+        # Extract basic fields
+        key = issue.get("key", "")
+        fields = issue.get("fields", {})
+        transitions = issue.get("transitions", [])
+
+        # Extract project from key (e.g., "LIC-247" -> "")
+        project = ""  # Empty as in example
+        group = ""  # Empty as in example
+
+        # Extract issue type
+        issuetype = fields.get("issuetype", {}).get("name", "")
+
+        # Extract current status
+        status = fields.get("status", {}).get("name", "")
+        if workflow and status:
+            status = normalize_status(status, workflow)
+
+        # Extract created date
+        created_str = fields.get("created", "")
+        if created_str:
+            try:
+                created_dt = datetime.fromisoformat(created_str.replace("Z", "+00:00"))
+                created_date = created_dt.strftime("%d.%m.%Y %H:%M:%S")
+            except (ValueError, AttributeError):
+                created_date = ""
+        else:
+            created_date = ""
+
+        # Extract components (pipe-separated)
+        components = fields.get("components", [])
+        component = "|".join([c.get("name", "") for c in components])
+        if component:
+            component += "|"  # Add trailing pipe as in example
+
+        # Extract resolution
+        resolution_obj = fields.get("resolution")
+        resolution = resolution_obj.get("name", "") if resolution_obj else ""
+        category = resolution  # Category appears to be same as resolution in example
+
+        # Calculate timing in days first
         timing = calculate_status_timing(
-            issue["transitions"],
+            transitions,
             workflow=workflow,
             use_business_days=use_business_days,
             holidays=holidays,
         )
 
-        row = {"key": issue["key"]}
-        row.update(timing)
+        # Convert timing from days to milliseconds
+        timing_ms = {status: int(days * 86400000) for status, days in timing.items()}
+
+        # Calculate special dates
+        first_date = ""
+        implementation_date = ""
+        closed_date = ""
+
+        if transitions:
+            # First Date: first transition date
+            first_trans = transitions[0]
+            if first_trans.get("date"):
+                first_dt = first_trans["date"]
+                if isinstance(first_dt, str):
+                    first_dt = datetime.fromisoformat(first_dt.replace("Z", "+00:00"))
+                first_date = first_dt.strftime("%d.%m.%Y %H:%M:%S")
+
+            # Implementation Date: first "In Progress" transition
+            for trans in transitions:
+                trans_status = trans.get("status", "")
+                if workflow:
+                    trans_status = normalize_status(trans_status, workflow)
+                if "progress" in trans_status.lower():
+                    trans_dt = trans.get("date")
+                    if trans_dt:
+                        if isinstance(trans_dt, str):
+                            trans_dt = datetime.fromisoformat(
+                                trans_dt.replace("Z", "+00:00")
+                            )
+                        implementation_date = trans_dt.strftime("%d.%m.%Y %H:%M:%S")
+                    break
+
+            # Closed Date: last transition if issue is closed/done
+            if resolution:  # Has resolution means it's closed
+                last_trans = transitions[-1]
+                if last_trans.get("date"):
+                    last_dt = last_trans["date"]
+                    if isinstance(last_dt, str):
+                        last_dt = datetime.fromisoformat(last_dt.replace("Z", "+00:00"))
+                    closed_date = last_dt.strftime("%d.%m.%Y %H:%M:%S")
+
+        # Build row in IssueTimes format
+        row = {
+            "Project": project,
+            "Group": group,
+            "Key": key,
+            "Issuetype": issuetype,
+            "Status": status,
+            "Created Date": created_date,
+            "Component": component,
+            "Category": category,
+            "First Date": first_date,
+            "Implementation Date": implementation_date,
+            "Closed Date": closed_date,
+        }
+
+        # Add status timing columns (in milliseconds)
+        row.update(timing_ms)
+
+        # Add Resolution at the end
+        row["Resolution"] = resolution
+
         rows.append(row)
 
     return rows
@@ -124,31 +226,29 @@ def export_transitions_rows(
         workflow: Optional workflow config for status normalization
 
     Returns:
-        List of dicts with issue key, from_status, to_status and date
+        List of dicts with Key, Transition (status), and Timestamp
     """
     rows = []
 
     for issue in issues:
         transitions = issue["transitions"]
 
-        # Add rows for each transition
-        for i in range(len(transitions) - 1):
-            current = transitions[i]
-            next_trans = transitions[i + 1]
-
-            from_status = current["status"]
-            to_status = next_trans["status"]
+        # Add rows for each transition (including the first one as Created)
+        for trans in transitions:
+            status = trans["status"]
 
             if workflow:
-                from_status = normalize_status(from_status, workflow)
-                to_status = normalize_status(to_status, workflow)
+                status = normalize_status(status, workflow)
+
+            # Format timestamp as DD.MM.YYYY HH:MM:SS
+            timestamp = trans["date"]
+            formatted_timestamp = timestamp.strftime("%d.%m.%Y %H:%M:%S")
 
             rows.append(
                 {
-                    "key": issue["key"],
-                    "from_status": from_status,
-                    "to_status": to_status,
-                    "date": next_trans["date"].isoformat(),
+                    "Key": issue["key"],
+                    "Transition": status,
+                    "Timestamp": formatted_timestamp,
                 }
             )
 

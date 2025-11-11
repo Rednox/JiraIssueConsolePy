@@ -131,29 +131,29 @@ def verify_cfd_output(csv_file: str):
     assert len(rows) == 5
 
     # Verify expected columns
-    assert set(reader.fieldnames) == {"Date", "Open", "In Progress", "Done"}
+    assert set(reader.fieldnames) == {"Day", "Open", "In Progress", "Done"}
 
     # Check a few key points:
     # Nov 1: 1 Open
-    assert rows[0]["Date"] == "2025-11-01"
+    assert rows[0]["Day"] == "01.11.2025"
     assert int(rows[0]["Open"]) == 1
     assert int(rows[0]["In Progress"]) == 0
     assert int(rows[0]["Done"]) == 0
 
     # Nov 2: 2 In Progress (both moved there)
-    assert rows[1]["Date"] == "2025-11-02"
+    assert rows[1]["Day"] == "02.11.2025"
     assert int(rows[1]["Open"]) == 0
     assert int(rows[1]["In Progress"]) == 2
     assert int(rows[1]["Done"]) == 0
 
     # Nov 4: 1 In Progress, 1 Done
-    assert rows[3]["Date"] == "2025-11-04"
+    assert rows[3]["Day"] == "04.11.2025"
     assert int(rows[3]["Open"]) == 0
     assert int(rows[3]["In Progress"]) == 1
     assert int(rows[3]["Done"]) == 1
 
     # Nov 5: 2 Done
-    assert rows[4]["Date"] == "2025-11-05"
+    assert rows[4]["Day"] == "05.11.2025"
     assert int(rows[4]["Open"]) == 0
     assert int(rows[4]["In Progress"]) == 0
     assert int(rows[4]["Done"]) == 2

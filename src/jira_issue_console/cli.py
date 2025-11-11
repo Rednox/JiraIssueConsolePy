@@ -142,13 +142,13 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         with open(cfd_file, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(
                 f,
-                fieldnames=["Date"]
+                fieldnames=["Day"]
                 + sorted(
                     set(
                         status
                         for row in rows
                         for status in row.keys()
-                        if status != "Date"
+                        if status != "Day"
                     )
                 ),
             )
@@ -167,11 +167,33 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         )
         with open(issue_times_file, "w", encoding="utf-8", newline="") as f:
             if rows:
-                # Get all unique status names from all rows
+                # Define fixed field order for IssueTimes format
+                fixed_fields = [
+                    "Project",
+                    "Group",
+                    "Key",
+                    "Issuetype",
+                    "Status",
+                    "Created Date",
+                    "Component",
+                    "Category",
+                    "First Date",
+                    "Implementation Date",
+                    "Closed Date",
+                ]
+
+                # Get all unique status columns (excluding fixed and Resolution)
                 all_statuses: set[str] = set()
                 for row in rows:
-                    all_statuses.update(k for k in row.keys() if k != "key")
-                fieldnames = ["key"] + sorted(all_statuses)
+                    all_statuses.update(
+                        k
+                        for k in row.keys()
+                        if k not in fixed_fields and k != "Resolution"
+                    )
+
+                # Build field names: fixed fields + sorted status columns + Resolution
+                fieldnames = fixed_fields + sorted(all_statuses) + ["Resolution"]
+
                 writer = csv.DictWriter(f, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerows(rows)
@@ -180,8 +202,8 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         # 3. Export transitions
         rows = export_transitions_rows(issues_with_transitions, workflow=workflow)
         with open(transitions_file, "w", encoding="utf-8", newline="") as f:
-            fieldnames = ["key", "from_status", "to_status", "date"]
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            fieldnames = ["Key", "Transition", "Timestamp"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=";")
             writer.writeheader()
             writer.writerows(rows)
         print(f"Exported transitions to {transitions_file}")
@@ -209,13 +231,13 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         with open(args.cfd, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(
                 f,
-                fieldnames=["Date"]
+                fieldnames=["Day"]
                 + sorted(
                     set(
                         status
                         for row in rows
                         for status in row.keys()
-                        if status != "Date"
+                        if status != "Day"
                     )
                 ),
             )
@@ -259,8 +281,8 @@ async def async_main(argv: Optional[List[str]] = None) -> int:
         )
         rows = export_transitions_rows(issues_with_transitions, workflow=workflow)
         with open(args.transitions, "w", encoding="utf-8", newline="") as f:
-            fieldnames = ["key", "from_status", "to_status", "date"]
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            fieldnames = ["Key", "Transition", "Timestamp"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=";")
             writer.writeheader()
             writer.writerows(rows)
         print(f"Exported transitions to {args.transitions}")

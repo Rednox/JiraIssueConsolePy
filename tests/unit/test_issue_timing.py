@@ -18,10 +18,21 @@ def _dt(s: str) -> datetime:
     return datetime.fromisoformat(s).replace(tzinfo=timezone.utc)
 
 
-def _create_test_issue(key: str, transitions: List[Dict[str, str]]) -> Dict:
+def _create_test_issue(
+    key: str, transitions: List[Dict[str, str]], fields: Dict = None
+) -> Dict:
     """Helper to create test issue data."""
+    if fields is None:
+        fields = {
+            "issuetype": {"name": "Task"},
+            "status": {"name": transitions[-1][0] if transitions else "Open"},
+            "created": "2023-01-01T10:00:00+00:00",
+            "components": [],
+            "resolution": None,
+        }
     return {
         "key": key,
+        "fields": fields,
         "transitions": [
             {"status": status, "date": _dt(dt)} for status, dt in transitions
         ],
@@ -83,7 +94,7 @@ def test_calculate_status_timing_business_days():
 
 
 def test_export_status_timing_rows():
-    """Test generation of status timing CSV rows."""
+    """Test generation of status timing rows in IssueTimes format."""
     issues = [
         _create_test_issue(
             "TEST-1",
@@ -106,10 +117,11 @@ def test_export_status_timing_rows():
     rows = export_status_timing_rows(issues)
 
     assert len(rows) == 2
-    assert rows[0]["key"] == "TEST-1"
-    assert rows[0]["Open"] == pytest.approx(1.0)
-    assert rows[1]["key"] == "TEST-2"
-    assert rows[1]["Open"] == pytest.approx(2.0)
+    assert rows[0]["Key"] == "TEST-1"
+    # Timing is now in milliseconds (1 day = 86400000 ms)
+    assert rows[0]["Open"] == pytest.approx(86400000, rel=0.01)
+    assert rows[1]["Key"] == "TEST-2"
+    assert rows[1]["Open"] == pytest.approx(2 * 86400000, rel=0.01)
 
 
 def test_export_transitions_rows():
@@ -127,16 +139,19 @@ def test_export_transitions_rows():
 
     rows = export_transitions_rows(issues)
 
-    assert len(rows) == 2  # Two transitions
+    assert len(rows) == 3  # All three transitions
     assert rows[0] == {
-        "key": "TEST-1",
-        "from_status": "Open",
-        "to_status": "In Progress",
-        "date": "2023-01-02T10:00:00+00:00",
+        "Key": "TEST-1",
+        "Transition": "Open",
+        "Timestamp": "01.01.2023 10:00:00",
     }
     assert rows[1] == {
-        "key": "TEST-1",
-        "from_status": "In Progress",
-        "to_status": "Done",
-        "date": "2023-01-03T10:00:00+00:00",
+        "Key": "TEST-1",
+        "Transition": "In Progress",
+        "Timestamp": "02.01.2023 10:00:00",
+    }
+    assert rows[2] == {
+        "Key": "TEST-1",
+        "Transition": "Done",
+        "Timestamp": "03.01.2023 10:00:00",
     }
