@@ -19,20 +19,24 @@ export JIRA_API_TOKEN="your-api-token"
 python -m jira_issue_console PROJ  # list open issues for project
 python -m jira_issue_console PROJ --jql "priority = High"  # filter with JQL
 
-# Export cycle time metrics
-python -m jira_issue_console PROJ --csv cycle_times.csv  # basic cycle times
-python -m jira_issue_console PROJ --cfd cfd.csv  # cumulative flow diagram data
-python -m jira_issue_console PROJ --status-timing status_times.csv  # time in each status
-python -m jira_issue_console PROJ --transitions transitions.csv  # status transition history
+# Export metrics
+python -m jira_issue_console PROJ --issue-times issue_times.csv  # elapsed times and time per status
+python -m jira_issue_console PROJ --cfd cfd.csv  # cumulative flow diagram data (last 5 years)
+python -m jira_issue_console PROJ --transitions transitions.csv  # complete status change log
+
+# Export to Excel format
+python -m jira_issue_console PROJ --issue-times issue_times.xlsx --format excel
+python -m jira_issue_console PROJ --cfd cfd.xlsx --format excel
 
 # Export all metrics to a folder with project key prefix
 python -m jira_issue_console PROJ --output ./output  # generates PROJ_CFD.csv, PROJ_IssueTimes.csv, PROJ_Transitions.csv
+python -m jira_issue_console PROJ --output ./output --format excel  # generates Excel files instead
 
 # Use business days for calculations
-python -m jira_issue_console PROJ --business-days --csv cycle_times.csv
+python -m jira_issue_console PROJ --business-days --issue-times issue_times.csv
 
 # Customize workflow status mapping
-python -m jira_issue_console PROJ --workflow workflow.txt --csv cycle_times.csv
+python -m jira_issue_console PROJ --workflow workflow.txt --issue-times issue_times.csv
 ```
 
 ## Features
@@ -70,7 +74,7 @@ curl -u user:token "https://your-jira/rest/api/2/search?jql=project=PROJ" | \
   > sanitized.json
 
 # Analyze the exported data
-python -m jira_issue_console PROJ --input example.json --csv cycle_times.csv
+python -m jira_issue_console PROJ --input example.json --issue-times issue_times.csv
 python -m jira_issue_console PROJ --input example.json --cfd cfd.csv
 python -m jira_issue_console PROJ --input example.json --transitions transitions.csv
 ```
@@ -112,27 +116,40 @@ Example JSON format:
 - Time tracking in each workflow status
 
 ### Workflow Metrics
-- Cumulative Flow Diagram (CFD) data generation
+- Cumulative Flow Diagram (CFD) data generation (last 5 years)
 - Status transition history and timing
 - Configurable workflow status mapping
 - Detailed timing breakdowns
 
 ### Data Export
-Several CSV export formats available:
-- `cycle_times.csv` - Basic cycle time metrics
-- `cfd.csv` - Daily counts for Cumulative Flow Diagram
-- `status_timing.csv` - Time spent in each workflow status
-- `transitions.csv` - Complete status transition history
+Export formats available in CSV or Excel:
+- `issue_times` - Actual elapsed times from start to finish and total time spent in each status per issue
+- `cfd` - Daily count of status changes by status for the last 5 years
+- `transitions` - Complete log of status changes per feature with associated timestamps
+
+#### Output Formats
+All exports support both CSV and Excel formats:
+```bash
+# CSV format (default)
+python -m jira_issue_console PROJ --issue-times output.csv
+
+# Excel format
+python -m jira_issue_console PROJ --issue-times output.xlsx --format excel
+```
 
 #### Batch Export with --output
 Use the `--output` parameter to automatically generate all metrics files in a single directory with project key prefix:
 ```bash
+# CSV format (default)
 python -m jira_issue_console PROJ --output ./output
+
+# Excel format
+python -m jira_issue_console PROJ --output ./output --format excel
 ```
 This generates:
-- `PROJ_CFD.csv` - Cumulative Flow Diagram data
-- `PROJ_IssueTimes.csv` - Time spent in each workflow status
-- `PROJ_Transitions.csv` - Complete status transition history
+- `PROJ_CFD.csv` (or .xlsx) - Cumulative Flow Diagram data for last 5 years
+- `PROJ_IssueTimes.csv` (or .xlsx) - Elapsed times and time spent in each status per issue
+- `PROJ_Transitions.csv` (or .xlsx) - Complete status transition log
 
 The output folder is created automatically if it doesn't exist.
 
