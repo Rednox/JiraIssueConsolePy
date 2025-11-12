@@ -79,13 +79,16 @@ def calculate_status_timing(
     return timing
 
 
-def export_status_timing_rows(
+def export_issue_times_rows(
     issues: List[Dict[str, Any]],
     workflow: Optional[WorkflowConfig] = None,
     use_business_days: bool = False,
     holidays: Optional[Set[date]] = None,
 ) -> List[Dict[str, Any]]:
-    """Generate CSV-ready rows with status timing data in IssueTimes format.
+    """Generate CSV-ready rows with issue timing data in IssueTimes format.
+
+    This function provides actual elapsed times from start to finish and total
+    time spent in each status per issue.
 
     Args:
         issues: List of issues with transitions and fields

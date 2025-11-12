@@ -127,33 +127,39 @@ def verify_cfd_output(csv_file: str):
         reader = csv.DictReader(f)
         rows = list(reader)
 
-    # Should have data for Nov 1-5
-    assert len(rows) == 5
+    # Should have data for the last 5 years (approximately 1825 days)
+    # The actual count will vary based on test run date
+    assert len(rows) > 1000, (
+        f"Expected at least 1000 rows for 5 years of data, got {len(rows)}"
+    )
 
     # Verify expected columns
     assert set(reader.fieldnames) == {"Day", "Open", "In Progress", "Done"}
 
+    # Find the rows for our test dates (Nov 1-5, 2025)
+    rows_by_date = {row["Day"]: row for row in rows}
+
     # Check a few key points:
     # Nov 1: 1 Open
-    assert rows[0]["Day"] == "01.11.2025"
-    assert int(rows[0]["Open"]) == 1
-    assert int(rows[0]["In Progress"]) == 0
-    assert int(rows[0]["Done"]) == 0
+    assert "01.11.2025" in rows_by_date
+    assert int(rows_by_date["01.11.2025"]["Open"]) == 1
+    assert int(rows_by_date["01.11.2025"]["In Progress"]) == 0
+    assert int(rows_by_date["01.11.2025"]["Done"]) == 0
 
     # Nov 2: 2 In Progress (both moved there)
-    assert rows[1]["Day"] == "02.11.2025"
-    assert int(rows[1]["Open"]) == 0
-    assert int(rows[1]["In Progress"]) == 2
-    assert int(rows[1]["Done"]) == 0
+    assert "02.11.2025" in rows_by_date
+    assert int(rows_by_date["02.11.2025"]["Open"]) == 0
+    assert int(rows_by_date["02.11.2025"]["In Progress"]) == 2
+    assert int(rows_by_date["02.11.2025"]["Done"]) == 0
 
     # Nov 4: 1 In Progress, 1 Done
-    assert rows[3]["Day"] == "04.11.2025"
-    assert int(rows[3]["Open"]) == 0
-    assert int(rows[3]["In Progress"]) == 1
-    assert int(rows[3]["Done"]) == 1
+    assert "04.11.2025" in rows_by_date
+    assert int(rows_by_date["04.11.2025"]["Open"]) == 0
+    assert int(rows_by_date["04.11.2025"]["In Progress"]) == 1
+    assert int(rows_by_date["04.11.2025"]["Done"]) == 1
 
     # Nov 5: 2 Done
-    assert rows[4]["Day"] == "05.11.2025"
-    assert int(rows[4]["Open"]) == 0
-    assert int(rows[4]["In Progress"]) == 0
-    assert int(rows[4]["Done"]) == 2
+    assert "05.11.2025" in rows_by_date
+    assert int(rows_by_date["05.11.2025"]["Open"]) == 0
+    assert int(rows_by_date["05.11.2025"]["In Progress"]) == 0
+    assert int(rows_by_date["05.11.2025"]["Done"]) == 2

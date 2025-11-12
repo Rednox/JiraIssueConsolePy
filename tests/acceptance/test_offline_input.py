@@ -54,13 +54,15 @@ def check_csv_created(filename, tmp_path):
     assert (tmp_path / filename).exists()
 
 
-@then("it contains cycle times for the exported issues")
-def check_cycle_times(tmp_path):
-    """Verify cycle time CSV content."""
-    with open(tmp_path / "cycle_times.csv") as f:
+@then("it contains issue timing data for the exported issues")
+def check_issue_times(tmp_path):
+    """Verify issue timing CSV content."""
+    with open(tmp_path / "issue_times.csv") as f:
         content = f.read()
-        # Should have header and TEST-1 data
-        assert "id,key,created,resolved,cycle_time_days" in content
+        # Should have IssueTimes format header and TEST-1 data
+        assert "Key" in content
+        assert "Project" in content
+        assert "Status" in content
         assert "TEST-1" in content
 
 

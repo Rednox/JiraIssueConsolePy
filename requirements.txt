@@ -7,3 +7,4 @@ ruff
 mypy
 requests
 click
+openpyxl>=3.0.0
