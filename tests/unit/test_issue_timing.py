@@ -8,7 +8,7 @@ import pytest
 from jira_issue_console.models.workflow_config import WorkflowConfig
 from jira_issue_console.core.issue_timing import (
     calculate_status_timing,
-    export_status_timing_rows,
+    export_issue_times_rows,
     export_transitions_rows,
 )
 
@@ -93,8 +93,8 @@ def test_calculate_status_timing_business_days():
     assert "In Progress" in timing
 
 
-def test_export_status_timing_rows():
-    """Test generation of status timing rows in IssueTimes format."""
+def test_export_issue_times_rows():
+    """Test generation of issue timing rows in IssueTimes format."""
     issues = [
         _create_test_issue(
             "TEST-1",
@@ -114,7 +114,7 @@ def test_export_status_timing_rows():
         ),
     ]
 
-    rows = export_status_timing_rows(issues)
+    rows = export_issue_times_rows(issues)
 
     assert len(rows) == 2
     assert rows[0]["Key"] == "TEST-1"

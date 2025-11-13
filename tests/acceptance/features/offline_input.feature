@@ -3,11 +3,11 @@ Feature: Process offline JSON files
   I want to analyze pre-exported Jira data
   So that I can work offline or with historical snapshots
 
-  Scenario: Export cycle times from JSON file
+  Scenario: Export issue times from JSON file
     Given I have a Jira JSON export file
-    When I run "jira_issue_console PROJ --input example.json --csv cycle_times.csv"
-    Then a CSV file "cycle_times.csv" is created
-    And it contains cycle times for the exported issues
+    When I run "jira_issue_console PROJ --input example.json --issue-times issue_times.csv"
+    Then a CSV file "issue_times.csv" is created
+    And it contains issue timing data for the exported issues
 
   Scenario: Generate CFD from JSON file
     Given I have a Jira JSON export file

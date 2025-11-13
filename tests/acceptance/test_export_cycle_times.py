@@ -12,7 +12,7 @@ from jira_issue_console.cli import main
 
 @pytest.fixture
 def mock_issues(mocker) -> List[Dict[str, Any]]:
-    """Return mock issues for testing."""
+    """Return mock issues for testing IssueTimes format."""
     return [
         {
             "key": "TEST-1",
@@ -21,6 +21,35 @@ def mock_issues(mocker) -> List[Dict[str, Any]]:
                 "created": "2025-11-01T10:00:00.000+0000",
                 "resolutiondate": "2025-11-04T16:00:00.000+0000",
                 "summary": "First test issue",
+                "project": {"key": "TEST", "name": "Test Project"},
+                "status": {"name": "Done"},
+                "issuetype": {"name": "Task"},
+                "components": [],
+                "resolution": {"name": "Fixed"},
+            },
+            "changelog": {
+                "histories": [
+                    {
+                        "created": "2025-11-02T14:00:00.000+0000",
+                        "items": [
+                            {
+                                "field": "status",
+                                "fromString": "Open",
+                                "toString": "In Progress",
+                            }
+                        ],
+                    },
+                    {
+                        "created": "2025-11-04T16:00:00.000+0000",
+                        "items": [
+                            {
+                                "field": "status",
+                                "fromString": "In Progress",
+                                "toString": "Done",
+                            }
+                        ],
+                    },
+                ]
             },
         },
         {
@@ -30,6 +59,35 @@ def mock_issues(mocker) -> List[Dict[str, Any]]:
                 "created": "2025-12-24T09:00:00.000+0000",
                 "resolutiondate": "2025-12-27T17:00:00.000+0000",
                 "summary": "Second test issue",
+                "project": {"key": "TEST", "name": "Test Project"},
+                "status": {"name": "Done"},
+                "issuetype": {"name": "Story"},
+                "components": [],
+                "resolution": {"name": "Fixed"},
+            },
+            "changelog": {
+                "histories": [
+                    {
+                        "created": "2025-12-25T10:00:00.000+0000",
+                        "items": [
+                            {
+                                "field": "status",
+                                "fromString": "Open",
+                                "toString": "In Progress",
+                            }
+                        ],
+                    },
+                    {
+                        "created": "2025-12-27T17:00:00.000+0000",
+                        "items": [
+                            {
+                                "field": "status",
+                                "fromString": "In Progress",
+                                "toString": "Done",
+                            }
+                        ],
+                    },
+                ]
             },
         },
     ]
@@ -73,8 +131,8 @@ def project_with_issues(mocker, mock_issues, project: str, count: int):
     )
 )
 def run_cli_with_csv(project: str, csv_file):
-    """Run the CLI with CSV export argument."""
-    args = [project, "--csv", csv_file]
+    """Run the CLI with issue times export argument."""
+    args = [project, "--issue-times", csv_file]
     main(args)
 
 
@@ -84,18 +142,23 @@ def run_cli_with_csv(project: str, csv_file):
     )
 )
 def verify_csv_output(csv_file: str, count: int):
-    """Verify the CSV output format and content."""
+    """Verify the CSV output format and content (IssueTimes format)."""
     with open(csv_file, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
-    # Verify header
-    assert lines[0].strip() == "id,key,created,resolved,cycle_time_days"
-
     # Verify we have the expected number of data rows
-    assert len(lines) == count + 1  # +1 for header
+    assert len(lines) == count + 1, (
+        f"Expected {count + 1} lines (header + {count} rows), got {len(lines)}"
+    )  # +1 for header
 
-    # Verify each line has the expected format (including header)
-    for line in lines:
-        # Each line should have 5 comma-separated values
-        values = line.strip().split(",")
-        assert len(values) == 5
+    # Verify header contains expected IssueTimes fields
+    header = lines[0].strip()
+    assert "Project" in header
+    assert "Key" in header
+    assert "Status" in header
+    assert "Created Date" in header
+
+    # Verify we have data rows
+    for i in range(1, len(lines)):
+        line = lines[i].strip()
+        assert len(line) > 0, f"Line {i} is empty"
