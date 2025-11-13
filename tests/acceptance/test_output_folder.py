@@ -17,6 +17,7 @@ def mock_issues(mocker) -> List[Dict[str, Any]]:
             "key": "TEST-1",
             "fields": {
                 "created": "2025-11-01T10:00:00.000+0000",
+                "project": {"key": "TEST", "name": "Test Project"},
                 "status": {"name": "Done"},
             },
             "changelog": {
@@ -48,6 +49,7 @@ def mock_issues(mocker) -> List[Dict[str, Any]]:
             "key": "TEST-2",
             "fields": {
                 "created": "2025-11-02T09:00:00.000+0000",
+                "project": {"key": "TEST", "name": "Test Project"},
                 "status": {"name": "Done"},
             },
             "changelog": {

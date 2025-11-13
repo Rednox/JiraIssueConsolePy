@@ -110,8 +110,9 @@ def export_issue_times_rows(
         fields = issue.get("fields", {})
         transitions = issue.get("transitions", [])
 
-        # Extract project from key (e.g., "LIC-247" -> "")
-        project = ""  # Empty as in example
+        # Extract project name from fields
+        project_obj = fields.get("project")
+        project = project_obj.get("name", "") if project_obj else ""
         group = ""  # Empty as in example
 
         # Extract issue type
@@ -154,6 +155,25 @@ def export_issue_times_rows(
 
         # Convert timing from days to milliseconds
         timing_ms = {status: int(days * 86400000) for status, days in timing.items()}
+
+        # Track first entering date for each status
+        first_status_dates: Dict[str, str] = {}
+        for trans in transitions:
+            trans_status = trans.get("status", "")
+            if workflow:
+                trans_status = normalize_status(trans_status, workflow)
+
+            # Only record the first time we see this status
+            if trans_status not in first_status_dates:
+                trans_dt = trans.get("date")
+                if trans_dt:
+                    if isinstance(trans_dt, str):
+                        trans_dt = datetime.fromisoformat(
+                            trans_dt.replace("Z", "+00:00")
+                        )
+                    first_status_dates[trans_status] = trans_dt.strftime(
+                        "%d.%m.%Y %H:%M:%S"
+                    )
 
         # Calculate special dates
         first_date = ""
@@ -210,6 +230,10 @@ def export_issue_times_rows(
 
         # Add status timing columns (in milliseconds)
         row.update(timing_ms)
+
+        # Add first entering date for each status (with suffix "_First")
+        for status_name, first_date_str in first_status_dates.items():
+            row[f"{status_name}_First"] = first_date_str
 
         # Add Resolution at the end
         row["Resolution"] = resolution

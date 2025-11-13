@@ -14,6 +14,7 @@ def test_cli_business_days_flag(tmp_path, monkeypatch):
             "fields": {
                 "created": "2025-11-01T10:00:00.000+0000",  # Saturday
                 "resolutiondate": "2025-11-04T16:00:00.000+0000",  # Tuesday
+                "project": {"key": "TEST", "name": "Test Project"},
                 "status": {"name": "Done"},
                 "issuetype": {"name": "Task"},
                 "components": [],
@@ -75,6 +76,7 @@ def test_cli_without_business_days_flag(tmp_path, monkeypatch):
             "fields": {
                 "created": "2025-11-01T10:00:00.000+0000",  # Saturday
                 "resolutiondate": "2025-11-04T16:00:00.000+0000",  # Tuesday
+                "project": {"key": "TEST", "name": "Test Project"},
                 "status": {"name": "Done"},
                 "issuetype": {"name": "Task"},
                 "components": [],

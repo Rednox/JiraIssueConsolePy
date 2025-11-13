@@ -10,6 +10,7 @@ def test_cli_writes_csv(tmp_path, monkeypatch):
             "fields": {
                 "created": "2025-10-01T00:00:00.000+0000",
                 "resolutiondate": "2025-10-04T00:00:00.000+0000",
+                "project": {"key": "PROJ", "name": "Project"},
                 "status": {"name": "Done"},
                 "issuetype": {"name": "Task"},
                 "components": [],
@@ -45,6 +46,7 @@ def test_cli_writes_csv(tmp_path, monkeypatch):
             "key": "PROJ-2",
             "fields": {
                 "created": "2025-10-01T12:00:00.000+0000",
+                "project": {"key": "PROJ", "name": "Project"},
                 "status": {"name": "Open"},
                 "issuetype": {"name": "Story"},
                 "components": [],
